@@ -1,14 +1,13 @@
 package godevenner.divexbackend.stock.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Data
@@ -19,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class Stock {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String ticker;
@@ -32,4 +31,9 @@ public class Stock {
 
     @OneToOne
     private Dividend dividend;
+
+    @OneToMany
+    @JoinColumn(name = "stock_id")
+    Set<HistoricalPricing> historicalPricingSet = new HashSet<HistoricalPricing>();
+
 }
