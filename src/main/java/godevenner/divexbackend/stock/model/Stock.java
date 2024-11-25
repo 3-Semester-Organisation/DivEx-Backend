@@ -1,14 +1,12 @@
 package godevenner.divexbackend.stock.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
 
 
 @Data
@@ -30,6 +28,14 @@ public class Stock {
     private String industry;
     private String sector;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private Dividend dividend;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "stock_id")
+    private Set<HistoricalDividend> historicalDividends;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "stock_id")
+    private Set<HistoricalPricing> historicalPricings;
 }
