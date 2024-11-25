@@ -1,8 +1,10 @@
 package godevenner.divexbackend.user;
 
+import godevenner.divexbackend.subscription.model.Subscription;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,6 +35,8 @@ public class User implements UserDetails {
     private String address;
     private String city;
 
+    @OneToOne
+    private Subscription subscription;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
