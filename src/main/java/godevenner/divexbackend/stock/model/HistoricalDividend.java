@@ -1,9 +1,6 @@
 package godevenner.divexbackend.stock.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -21,7 +18,4 @@ public class HistoricalDividend {
 
     private double dividendRate;
     private LocalDate exDividendDate;
-
-    @ManyToOne
-    private Stock stock;
 }
