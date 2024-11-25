@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.List;
 
 
 @Data
@@ -33,9 +33,9 @@ public class Stock {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "stock_id")
-    private Set<HistoricalDividend> historicalDividends;
+    private List<HistoricalDividend> historicalDividends;
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "stock_id")
-    private Set<HistoricalPricing> historicalPricings;
+    private List<HistoricalPricing> historicalPricings;
 }
