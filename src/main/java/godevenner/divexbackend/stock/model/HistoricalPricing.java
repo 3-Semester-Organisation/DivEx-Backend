@@ -1,9 +1,6 @@
 package godevenner.divexbackend.stock.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,9 +19,8 @@ public class HistoricalPricing {
     @GeneratedValue
     private long id;
 
+    private double openingPrice;
+    private LocalDate openingDate;
     private double previousDailyClosingPrice;
     private LocalDate closingDate;
-
-    @ManyToOne
-    private Stock stock;
 }
