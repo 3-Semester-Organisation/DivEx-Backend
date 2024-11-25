@@ -1,7 +1,5 @@
 package godevenner.divexbackend.stock.model;
 
-import godevenner.divexbackend.stock.model.dividend.Dividend;
-import godevenner.divexbackend.stock.model.historicaldividend.HistoricalDividend;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

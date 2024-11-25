@@ -1,6 +1,5 @@
-package godevenner.divexbackend.stock.model.historicalpricing;
+package godevenner.divexbackend.stock.model;
 
-import godevenner.divexbackend.stock.model.Stock;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

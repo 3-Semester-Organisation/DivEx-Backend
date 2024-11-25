@@ -1,4 +1,4 @@
-package godevenner.divexbackend.stock.model.dividend;
+package godevenner.divexbackend.stock.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
