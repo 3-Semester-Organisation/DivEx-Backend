@@ -1,6 +1,5 @@
-package godevenner.divexbackend.portfolioentry;
+package godevenner.divexbackend.portfolio.model;
 
-import godevenner.divexbackend.portfolio.Portfolio;
 import godevenner.divexbackend.stock.model.Stock;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
