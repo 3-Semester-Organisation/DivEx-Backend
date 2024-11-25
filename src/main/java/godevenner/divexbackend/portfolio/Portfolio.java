@@ -1,8 +1,7 @@
 package godevenner.divexbackend.portfolio;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import godevenner.divexbackend.user.User;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,5 +19,6 @@ public class Portfolio {
     private long id;
     private String name;
 
-
+    @ManyToOne
+    private User user;
 }
