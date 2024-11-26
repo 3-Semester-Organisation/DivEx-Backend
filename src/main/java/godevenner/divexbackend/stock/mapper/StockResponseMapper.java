@@ -52,7 +52,7 @@ public class StockResponseMapper {
     private List<HistoricalDividendsResponse> toHistoricalDividendsResponse(Stock stock) {
         return stock.getHistoricalDividends().stream()
                 .map(historicalDividend -> new HistoricalDividendsResponse(
-                        historicalDividend.getDividendRate(),
+                        historicalDividend.getDividend(),
                         historicalDividend.getExDividendDate()
                 )).toList();
     }

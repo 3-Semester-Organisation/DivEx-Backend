@@ -4,6 +4,6 @@ import java.time.LocalDate;
 
 public record HistoricalDividendsResponse(
         double dividendRate,
-        LocalDate exDividendDate
+        long exDividendDate
 ) {
 }

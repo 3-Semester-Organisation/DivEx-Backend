@@ -20,7 +20,7 @@ public record StockResponse(
         double dividendYield,
         double dividendRatio,
         double fiveYearAvgDividendYield,
-        LocalDate exDividendDate,
+        long exDividendDate,
 
         List<HistoricalDividendsResponse> historicalDividendsResponseList
 ) {

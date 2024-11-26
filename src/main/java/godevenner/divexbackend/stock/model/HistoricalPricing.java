@@ -20,7 +20,7 @@ public class HistoricalPricing {
     private long id;
 
     private double openingPrice;
-    private LocalDate openingDate;
+    private long openingDate;
     private double previousDailyClosingPrice;
-    private LocalDate closingDate;
+    private long closingDate;
 }

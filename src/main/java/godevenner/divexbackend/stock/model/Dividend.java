@@ -25,5 +25,5 @@ public class Dividend {
     private double dividendYield;
     private double dividendRatio;
     private double fiveYearAvgDividendYield;
-    private LocalDate exDividendDate;
+    private long exDividendDate;
 }
