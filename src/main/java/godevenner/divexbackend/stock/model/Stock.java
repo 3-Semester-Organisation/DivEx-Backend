@@ -24,7 +24,10 @@ public class Stock {
     private String name;
     private String country;
     private String exchange;
+
+    @Enumerated(EnumType.STRING)
     private Currency currency;
+
     private String industry;
     private String sector;
 
@@ -38,4 +41,5 @@ public class Stock {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "stock_id")
     private List<HistoricalPricing> historicalPricings;
+
 }
