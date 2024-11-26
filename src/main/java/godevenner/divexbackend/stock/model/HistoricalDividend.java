@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public class HistoricalDividend {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private double dividendRate;
