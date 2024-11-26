@@ -6,8 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 
 @Data
@@ -25,15 +24,22 @@ public class Stock {
     private String name;
     private String country;
     private String exchange;
+
+    @Enumerated(EnumType.STRING)
     private Currency currency;
+
     private String industry;
     private String sector;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private Dividend dividend;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "stock_id")
-    Set<HistoricalPricing> historicalPricingSet = new HashSet<HistoricalPricing>();
+    private List<HistoricalDividend> historicalDividends;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "stock_id")
+    private List<HistoricalPricing> historicalPricings;
 
 }

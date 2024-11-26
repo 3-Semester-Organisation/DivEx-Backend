@@ -19,11 +19,8 @@ public class HistoricalPricing {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private double openingPrice;
+    private LocalDate openingDate;
     private double previousDailyClosingPrice;
     private LocalDate closingDate;
-
-
-//    @ManyToOne
-//    private Stock stock;
-
 }

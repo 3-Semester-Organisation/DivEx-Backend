@@ -18,7 +18,4 @@ public class HistoricalDividend {
 
     private double dividendRate;
     private LocalDate exDividendDate;
-
-    @ManyToOne
-    private Stock stock;
 }
