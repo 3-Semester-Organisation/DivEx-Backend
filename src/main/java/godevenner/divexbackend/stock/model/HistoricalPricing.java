@@ -23,7 +23,4 @@ public class HistoricalPricing {
     private LocalDate openingDate;
     private double previousDailyClosingPrice;
     private LocalDate closingDate;
-
-    @ManyToOne
-    private Stock stock;
 }
