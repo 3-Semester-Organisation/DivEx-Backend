@@ -4,8 +4,8 @@ import java.time.LocalDate;
 
 public record HistoricalPricingResponse(
         double openingPrice,
-        LocalDate openingDate,
+        long openingDate,
         double previousDailyClosingPrice,
-        LocalDate closingDate
+        long closingDate
 ) {
 }
