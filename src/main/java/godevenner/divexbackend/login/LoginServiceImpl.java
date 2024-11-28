@@ -7,6 +7,7 @@ import godevenner.divexbackend.user.model.User;
 import godevenner.divexbackend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -48,7 +49,17 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public AuthenticationResponse login(LoginRequest loginRequest) {
-        return null;
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.username(),
+                        loginRequest.password()
+                )
+        );
+
+        User user = userRepository.findByUsername(loginRequest.username())
+                .orElseThrow();
+
+        return generatedAuthenticationResponse(user);
     }
 
     private AuthenticationResponse generatedAuthenticationResponse(User user) {
