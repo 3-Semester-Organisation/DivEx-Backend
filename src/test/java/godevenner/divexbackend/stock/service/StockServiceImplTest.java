@@ -43,15 +43,15 @@ class StockServiceImplTest {
     void getAllStocksPagination() {
 
         //Apple Stock
-        Dividend appleDividend = new Dividend(1L, 2.5, 1.2, 0.6, 1.1, LocalDate.of(2024, 1, 1));
-        HistoricalPricing pricing1 = new HistoricalPricing(1L, 150.0, LocalDate.of(2024, 11, 1), 148.0, LocalDate.of(2024, 11, 1));
-        HistoricalDividend dividendHistory1 = new HistoricalDividend(1L, 2.0, LocalDate.of(2023, 1, 1));
+        Dividend appleDividend = new Dividend(1L, 2.5, 1.2, 0.6, 1.1, 5000000);
+        HistoricalPricing pricing1 = new HistoricalPricing(1L, 150.0,5000000, 148.0, 4000000);
+        HistoricalDividend dividendHistory1 = new HistoricalDividend(1L, 2.0, 5000000);
         Stock appleStock = new Stock(1L, "AAPL", "Apple Inc.", "USA", "NASDAQ", Currency.DKK, "Technology", "Consumer Electronics", appleDividend, List.of(dividendHistory1), List.of(pricing1));
 
         //Google Stock
-        Dividend goggleDividend = new Dividend(2L, 3.0, 1.5, 0.7, 1.3, LocalDate.of(2024, 2, 1));
-        HistoricalPricing pricing2 = new HistoricalPricing(2L, 152.1, LocalDate.of(2024, 12, 2), 150.0, LocalDate.of(2024, 11, 2));
-        HistoricalDividend dividendHistory2 = new HistoricalDividend(2L, 2.1, LocalDate.of(2023, 2, 1));
+        Dividend goggleDividend = new Dividend(2L, 3.0, 1.5, 0.7, 1.3, 5000000);
+        HistoricalPricing pricing2 = new HistoricalPricing(2L, 152.1, 5000000, 150.0, 4000000);
+        HistoricalDividend dividendHistory2 = new HistoricalDividend(2L, 2.1, 5000000);
         Stock goggleStock = new Stock(2L, "GOOGL", "Alphabet Inc.", "USA", "NASDAQ", Currency.SEK, "Technology", "Internet Services", goggleDividend, List.of(dividendHistory2), List.of(pricing2));
 
 
@@ -73,13 +73,13 @@ class StockServiceImplTest {
                 Currency.DKK,
                 "Technology",
                 "Consumer Electronics",
-                List.of(new HistoricalPricingResponse(150.0, LocalDate.of(2024, 11, 1), 148.0, LocalDate.of(2024, 11, 1))),
+                List.of(new HistoricalPricingResponse(150.0, 5000000, 148.0, 4000000)),
                 2.5,
                 1.2,
                 0.6,
                 1.1,
-                LocalDate.of(2024, 1, 1),
-                List.of(new HistoricalDividendsResponse(2.0, LocalDate.of(2023, 1, 1)))
+                5000000,
+                List.of(new HistoricalDividendsResponse(2.0, 5000000))
         );
 
         // Google StockResponse
@@ -91,13 +91,13 @@ class StockServiceImplTest {
                 Currency.SEK,
                 "Technology",
                 "Internet Services",
-                List.of(new HistoricalPricingResponse(152.1, LocalDate.of(2024, 12, 2), 150.0, LocalDate.of(2024, 11, 2))),
+                List.of(new HistoricalPricingResponse(152.1, 5000000, 150.0, 4000000)),
                 3.0,
                 1.5,
                 0.7,
                 1.3,
-                LocalDate.of(2024, 2, 1),
-                List.of(new HistoricalDividendsResponse(2.1, LocalDate.of(2023, 2, 1)))
+                5000000,
+                List.of(new HistoricalDividendsResponse(2.1, 5000000))
         );
 
         List<StockResponse> stockResponseList = Arrays.asList(appleStockResponse, googleStockResponse);
@@ -114,9 +114,9 @@ class StockServiceImplTest {
     @Test
     void getStockByTicker() {
         //Apple Stock
-        Dividend appleDividend = new Dividend(1L, 2.5, 1.2, 0.6, 1.1, LocalDate.of(2024, 1, 1));
-        HistoricalPricing pricing1 = new HistoricalPricing(1L, 150.0, LocalDate.of(2024, 11, 1), 148.0, LocalDate.of(2024, 11, 1));
-        HistoricalDividend dividendHistory1 = new HistoricalDividend(1L, 2.0, LocalDate.of(2023, 1, 1));
+        Dividend appleDividend = new Dividend(1L, 2.5, 1.2, 0.6, 1.1, 5000000);
+        HistoricalPricing pricing1 = new HistoricalPricing(1L, 150.0, 5000000, 148.0, 4000000);
+        HistoricalDividend dividendHistory1 = new HistoricalDividend(1L, 2.0, 5000000);
         Stock appleStock = new Stock(1L, "AAPL", "Apple Inc.", "USA", "NASDAQ", Currency.DKK, "Technology", "Consumer Electronics", appleDividend, List.of(dividendHistory1), List.of(pricing1));
         Optional<Stock> stockOptional = Optional.of(appleStock);
 
@@ -131,13 +131,13 @@ class StockServiceImplTest {
                 Currency.DKK,
                 "Technology",
                 "Consumer Electronics",
-                List.of(new HistoricalPricingResponse(150.0, LocalDate.of(2024, 11, 1), 148.0, LocalDate.of(2024, 11, 1))),
+                List.of(new HistoricalPricingResponse(150.0, 5000000, 148.0, 4000000)),
                 2.5,
                 1.2,
                 0.6,
                 1.1,
-                LocalDate.of(2024, 1, 1),
-                List.of(new HistoricalDividendsResponse(2.0, LocalDate.of(2023, 1, 1)))
+                5000000,
+                List.of(new HistoricalDividendsResponse(2.0, 5000000))
         );
         Mockito.when(stockResponseMapper.toStockResponse(ArgumentMatchers.any(Stock.class))).thenReturn(appleStockResponse);
 
