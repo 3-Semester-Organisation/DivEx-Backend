@@ -1,6 +1,9 @@
-package godevenner.divexbackend.login;
+package godevenner.divexbackend.login.service;
 
 import godevenner.divexbackend.config.JwtService;
+import godevenner.divexbackend.login.dto.AuthenticationResponse;
+import godevenner.divexbackend.login.dto.LoginRequest;
+import godevenner.divexbackend.login.dto.RegisterRequest;
 import godevenner.divexbackend.subscription.model.Subscription;
 import godevenner.divexbackend.subscription.model.SubscriptionType;
 import godevenner.divexbackend.user.model.User;

@@ -1,4 +1,4 @@
-package godevenner.divexbackend.login;
+package godevenner.divexbackend.login.dto;
 
 public record RegisterRequest(
         String subscriptionType,
