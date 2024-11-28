@@ -1,5 +1,6 @@
 package godevenner.divexbackend.login;
 
+import godevenner.divexbackend.config.JwtService;
 import godevenner.divexbackend.subscription.model.Subscription;
 import godevenner.divexbackend.subscription.model.SubscriptionType;
 import godevenner.divexbackend.user.model.User;
@@ -19,6 +20,7 @@ public class LoginServiceImpl implements LoginService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
     @Override
     public AuthenticationResponse register(RegisterRequest registerRequest) {
