@@ -2,7 +2,6 @@ package godevenner.divexbackend.stock.dto;
 
 import godevenner.divexbackend.stock.model.Currency;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public record StockResponse(
