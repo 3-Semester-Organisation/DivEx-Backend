@@ -1,4 +1,4 @@
-package godevenner.divexbackend.user;
+package godevenner.divexbackend.user.model;
 
 import godevenner.divexbackend.subscription.model.Subscription;
 import jakarta.persistence.*;

@@ -1,6 +1,6 @@
 package godevenner.divexbackend.portfolio.model;
 
-import godevenner.divexbackend.user.User;
+import godevenner.divexbackend.user.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
