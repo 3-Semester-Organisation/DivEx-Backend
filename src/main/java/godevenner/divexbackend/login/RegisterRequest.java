@@ -1,6 +1,7 @@
 package godevenner.divexbackend.login;
 
 public record RegisterRequest(
+        String subscriptionType,
         String username,
         String email,
         String password,
