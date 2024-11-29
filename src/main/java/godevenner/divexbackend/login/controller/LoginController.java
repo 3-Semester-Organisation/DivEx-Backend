@@ -1,6 +1,8 @@
 package godevenner.divexbackend.login.controller;
 
 
+import godevenner.divexbackend.exception.EmailTakenException;
+import godevenner.divexbackend.exception.UsernameTakenException;
 import godevenner.divexbackend.login.dto.AuthenticationResponse;
 import godevenner.divexbackend.login.dto.LoginRequest;
 import godevenner.divexbackend.login.dto.RegisterRequest;
@@ -15,6 +17,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -30,7 +34,11 @@ public class LoginController {
 
         Optional<User> isUsernameTaken = userService.findByUsername(registerRequest.username());
         if (isUsernameTaken.isPresent()) {
-            return ResponseEntity.badRequest().build();
+            throw new UsernameTakenException("Username already taken.");
+        }
+        Optional<User> isEmailTaken = userService.findByEmail(registerRequest.email());
+        if (isEmailTaken.isPresent()) {
+            throw new EmailTakenException("Email already taken.");
         }
 
         AuthenticationResponse authenticationResponse = loginService.shortRegister(registerRequest);
@@ -38,20 +46,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        try {
-            AuthenticationResponse authenticationResponse = loginService.login(loginRequest);
-            return ResponseEntity.ok(authenticationResponse);
-        } catch (BadCredentialsException e) {
-            System.out.println("Invalid username or password");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
-        } catch (AuthenticationException e) {
-            System.out.println("Authentication failed");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
-        } catch (Exception e) {
-            System.out.println("An error occurred" + e.getMessage());
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
-        }
+    public AuthenticationResponse login(@RequestBody LoginRequest loginRequest) {
+        return loginService.login(loginRequest);
     }
 }
