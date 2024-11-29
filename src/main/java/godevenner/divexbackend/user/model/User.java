@@ -1,12 +1,14 @@
-package godevenner.divexbackend.user;
+package godevenner.divexbackend.user.model;
 
 import godevenner.divexbackend.subscription.model.Subscription;
+import godevenner.divexbackend.subscription.model.SubscriptionType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -32,12 +34,15 @@ public class User implements UserDetails {
     private String address;
     private String city;
 
+
     @OneToOne
     private Subscription subscription;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of(new SimpleGrantedAuthority(
+                subscription.getSubscriptionType().name())
+        );
     }
 
     @Override
