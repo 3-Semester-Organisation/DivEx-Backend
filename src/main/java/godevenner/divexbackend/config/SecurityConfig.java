@@ -37,11 +37,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests(auth -> auth
-//                    .requestMatchers("/api/v1/showing").authenticated()
-//                    .requestMatchers("/api/v1/seatbookings").authenticated()
-//                    .requestMatchers("/api/v1/bookings").authenticated()
-//                    .requestMatchers("/api/v1/movies/addmovie").authenticated()
-//                    .requestMatchers("/api/v1/movies/delete").authenticated()
+                        .requestMatchers("/api/v1/**").permitAll()
+                        //.anyRequest().authenticated())
                         .anyRequest().permitAll())
 
                 .sessionManagement(session -> session
@@ -57,7 +54,9 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         // Set up CORS configuration
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://127.0.0.1:5500","http://localhost:1337", "http://localhost:63342"));
+        configuration.setAllowedOrigins(List.of(
+                "http://localhost:5173"
+        ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
