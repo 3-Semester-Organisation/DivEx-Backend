@@ -35,7 +35,7 @@ public class User implements UserDetails {
     private String city;
 
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Subscription subscription;
 
     @Override
