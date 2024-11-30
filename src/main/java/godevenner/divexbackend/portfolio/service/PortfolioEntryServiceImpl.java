@@ -17,5 +17,9 @@ public class PortfolioEntryServiceImpl implements PortfolioEntryService {
         return portfolioEntryRepository.findByPortfolioId(userId);
     }
 
+    public PortfolioEntry createPortfolioEntry(PortfolioEntry portfolioEntry) {
+        return portfolioEntryRepository.save(portfolioEntry);
+    }
+
 
 }

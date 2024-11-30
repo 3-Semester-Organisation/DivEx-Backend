@@ -38,4 +38,10 @@ public class PortfolioController {
         return ResponseEntity.ok(portfolioentries);
     }
 
+    @PostMapping("/portfolioentry")
+    public ResponseEntity<PortfolioEntry> createPortfolioEntry(@RequestBody PortfolioEntry portfolioEntry) {
+        PortfolioEntry createdPortfolioEntry = portfolioEntryService.createPortfolioEntry(portfolioEntry);
+        return ResponseEntity.ok(createdPortfolioEntry);
+    }
+
 }

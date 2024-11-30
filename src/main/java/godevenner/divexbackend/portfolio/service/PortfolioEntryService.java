@@ -8,5 +8,6 @@ import java.util.List;
 public interface PortfolioEntryService {
 
     List<PortfolioEntry> getPortfolioEntries(Integer portfolioId);
+    PortfolioEntry createPortfolioEntry(PortfolioEntry portfolioEntry);
 
 }
