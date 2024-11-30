@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 //this class is not really needed since UserDetailsService already has a method of returning a user by the username.
-//but if we wanted to return a user by their email or any other way, we can use this class to implement our own
+//but if we wanted to return a user by their username or any other way, we can use this class to implement our own
 //costume fetching of the user...
 @Configuration
 @RequiredArgsConstructor
