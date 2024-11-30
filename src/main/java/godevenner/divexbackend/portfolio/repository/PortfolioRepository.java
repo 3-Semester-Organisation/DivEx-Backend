@@ -1,4 +1,4 @@
-package godevenner.divexbackend.portfolio.model.repository;
+package godevenner.divexbackend.portfolio.repository;
 
 import godevenner.divexbackend.portfolio.model.Portfolio;
 import org.springframework.data.jpa.repository.JpaRepository;

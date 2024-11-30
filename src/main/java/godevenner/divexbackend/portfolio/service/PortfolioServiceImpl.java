@@ -1,7 +1,7 @@
-package godevenner.divexbackend.portfolio.model.service;
+package godevenner.divexbackend.portfolio.service;
 
 import godevenner.divexbackend.portfolio.model.Portfolio;
-import godevenner.divexbackend.portfolio.model.repository.PortfolioRepository;
+import godevenner.divexbackend.portfolio.repository.PortfolioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,5 +15,9 @@ public class PortfolioServiceImpl implements PortfolioService {
 
     public List<Portfolio> getPortfolios(Integer userId) {
         return portfolioRepository.findByUserId(userId);
+    }
+
+    public Portfolio createPortfolio(Portfolio portfolio) {
+        return portfolioRepository.save(portfolio);
     }
 }
