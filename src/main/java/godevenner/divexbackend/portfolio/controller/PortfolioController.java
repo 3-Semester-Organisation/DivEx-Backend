@@ -20,8 +20,6 @@ public class PortfolioController {
 
     @GetMapping("/portfolio")
     public ResponseEntity<List<Portfolio>> getPortfolios(@RequestBody Integer userId) {
-
-
         List<Portfolio> portfolio = portfolioService.getPortfolios(userId);
         return ResponseEntity.ok(portfolio);
     }
