@@ -107,6 +107,7 @@ public class LoginServiceImpl implements LoginService {
     private AuthenticationResponse generatedAuthenticationResponse(User user) {
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("subscriptionType", user.getSubscription().getSubscriptionType());
+        extraClaims.put("userId", user.getId());
         String token = jwtService.generateToken(extraClaims, user);
         return new AuthenticationResponse(token);
     }
