@@ -1,5 +1,7 @@
 package godevenner.divexbackend.portfolio.controller;
 
+import godevenner.divexbackend.config.JwtService;
+import godevenner.divexbackend.portfolio.dto.CreatePortfolioRequest;
 import godevenner.divexbackend.portfolio.model.Portfolio;
 import godevenner.divexbackend.portfolio.model.PortfolioEntry;
 import godevenner.divexbackend.portfolio.service.PortfolioEntryService;
@@ -27,6 +29,8 @@ class PortfolioControllerTest {
     PortfolioService portfolioService;
     @Mock
     PortfolioEntryService portfolioEntryService;
+    @Mock
+    JwtService jwtService;
     @InjectMocks
     PortfolioController portfolioController;
 
@@ -37,79 +41,36 @@ class PortfolioControllerTest {
 
     @Test
     void testGetPortfolios() {
-        when(portfolioService.getPortfolios(anyInt())).thenReturn(
-                List.of(new Portfolio(0L, "name", new User(1L, "username", "email", "password", "firstName", "lastName", "phone", "address", "city",
-                        new Subscription(1L, true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.NOVEMBER, 30, 22, 59, 13), LocalDateTime.of(2024, Month.NOVEMBER, 30, 22, 59, 13))))));
+        when(portfolioService.getPortfolios(anyInt())).thenReturn(List.of(new Portfolio(0L, "name", new User(Long.valueOf(1), "username", "email", "password", "firstName", "lastName", "phone", "address", "city", new Subscription(Long.valueOf(1), true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.DECEMBER, 1, 17, 19, 18), LocalDateTime.of(2024, Month.DECEMBER, 1, 17, 19, 18))))));
 
-        ResponseEntity<List<Portfolio>> result = portfolioController.getPortfolios(1);
-        Assertions.assertEquals(new ResponseEntity<>(
-                List.of(new Portfolio(0L, "name", new User(1L, "username", "email", "password", "firstName", "lastName", "phone", "address", "city",
-                        new Subscription(1L, true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.NOVEMBER, 30, 22, 59, 13), LocalDateTime.of(2024, Month.NOVEMBER, 30, 22, 59, 13))))), null, 200), result);
+        ResponseEntity<List<Portfolio>> result = portfolioController.getPortfolios(Integer.valueOf(0));
+        Assertions.assertEquals(new ResponseEntity<List<Portfolio>>(List.of(new Portfolio(0L, "name", new User(Long.valueOf(1), "username", "email", "password", "firstName", "lastName", "phone", "address", "city", new Subscription(Long.valueOf(1), true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.DECEMBER, 1, 17, 19, 18), LocalDateTime.of(2024, Month.DECEMBER, 1, 17, 19, 18))))), null, 200), result);
     }
 
     @Test
     void testCreatePortfolio() {
-        when(portfolioService.createPortfolio(any(Portfolio.class))).thenReturn(
-                new Portfolio(0L, "name", new User(1L, "username", "email", "password", "firstName", "lastName", "phone", "address", "city",
-                        new Subscription(1L, true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.NOVEMBER, 30, 22, 59, 13), LocalDateTime.of(2024, Month.NOVEMBER, 30, 22, 59, 13)))));
+        when(portfolioService.createPortfolio(anyString(), anyLong())).thenReturn(new Portfolio(0L, "name", new User(Long.valueOf(1), "username", "email", "password", "firstName", "lastName", "phone", "address", "city", new Subscription(Long.valueOf(1), true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.DECEMBER, 1, 17, 19, 18), LocalDateTime.of(2024, Month.DECEMBER, 1, 17, 19, 18)))));
+        when(jwtService.extractUserId(anyString())).thenReturn("1");
 
-        ResponseEntity<Portfolio> result = portfolioController.createPortfolio(
-                new Portfolio(0L, "name", new User(1L, "username", "email", "password", "firstName", "lastName", "phone", "address", "city",
-                        new Subscription(1L, true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.NOVEMBER, 30, 22, 59, 13), LocalDateTime.of(2024, Month.NOVEMBER, 30, 22, 59, 13)))));
-        Assertions.assertEquals(new ResponseEntity<>(
-                new Portfolio(0L, "name", new User(1L, "username", "email", "password", "firstName", "lastName", "phone", "address", "city",
-                        new Subscription(1L, true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.NOVEMBER, 30, 22, 59, 13), LocalDateTime.of(2024, Month.NOVEMBER, 30, 22, 59, 13)))), null, 200), result);
+        ResponseEntity<Portfolio> result = portfolioController.createPortfolio(new CreatePortfolioRequest("portfolioName"), "authorizationHeader");
+        Assertions.assertEquals(new ResponseEntity<Portfolio>(new Portfolio(0L, "name", new User(Long.valueOf(1), "username", "email", "password", "firstName", "lastName", "phone", "address", "city", new Subscription(Long.valueOf(1), true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.DECEMBER, 1, 17, 19, 18), LocalDateTime.of(2024, Month.DECEMBER, 1, 17, 19, 18)))), null, 200), result);
     }
 
     @Test
     void testGetPortfolioEntries() {
-        when(portfolioEntryService.getPortfolioEntries(anyInt())).thenReturn(List.of(
-                new PortfolioEntry(1L,
-                        new Portfolio(0L, "name", new User(1L, "username", "email", "password", "firstName", "lastName", "phone", "address", "city",
-                                new Subscription(1L, true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.NOVEMBER, 30, 22, 59, 13), LocalDateTime.of(2024, Month.NOVEMBER, 30, 22, 59, 13)))),
-                        new Stock(0L, "ticker", "name", "country", "exchange", Currency.DKK, "industry", "sector",
-                                new Dividend(0L, 0d, 0d, 0d, 0d, 0L),
-                                List.of(new HistoricalDividend(0L, 0d, 0L)),
-                                List.of(new HistoricalPricing(0L, 0d, 0L, 0d, 0L))))));
+        when(portfolioEntryService.getPortfolioEntries(anyInt())).thenReturn(List.of(new PortfolioEntry(Long.valueOf(1), new Portfolio(0L, "name", new User(Long.valueOf(1), "username", "email", "password", "firstName", "lastName", "phone", "address", "city", new Subscription(Long.valueOf(1), true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.DECEMBER, 1, 17, 19, 18), LocalDateTime.of(2024, Month.DECEMBER, 1, 17, 19, 18)))), new Stock(0L, "ticker", "name", "country", "exchange", Currency.DKK, "industry", "sector", new Dividend(0L, 0d, 0d, 0d, 0d, 0L), List.of(new HistoricalDividend(0L, 0d, 0L)), List.of(new HistoricalPricing(0L, 0d, 0L, 0d, 0L))))));
 
-        ResponseEntity<List<PortfolioEntry>> result = portfolioController.getPortfolioEntries(0);
-        Assertions.assertEquals(new ResponseEntity<>(
-                List.of(new PortfolioEntry(1L,
-                        new Portfolio(0L, "name", new User(1L, "username", "email", "password", "firstName", "lastName", "phone", "address", "city",
-                                new Subscription(1L, true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.NOVEMBER, 30, 22, 59, 13), LocalDateTime.of(2024, Month.NOVEMBER, 30, 22, 59, 13)))),
-                        new Stock(0L, "ticker", "name", "country", "exchange", Currency.DKK, "industry", "sector", new Dividend(0L, 0d, 0d, 0d, 0d, 0L),
-                                List.of(new HistoricalDividend(0L, 0d, 0L)), List.of(new HistoricalPricing(0L, 0d, 0L, 0d, 0L))))), null, 200), result);
+        ResponseEntity<List<PortfolioEntry>> result = portfolioController.getPortfolioEntries(Integer.valueOf(0));
+        Assertions.assertEquals(new ResponseEntity<List<PortfolioEntry>>(List.of(new PortfolioEntry(Long.valueOf(1), new Portfolio(0L, "name", new User(Long.valueOf(1), "username", "email", "password", "firstName", "lastName", "phone", "address", "city", new Subscription(Long.valueOf(1), true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.DECEMBER, 1, 17, 19, 18), LocalDateTime.of(2024, Month.DECEMBER, 1, 17, 19, 18)))), new Stock(0L, "ticker", "name", "country", "exchange", Currency.DKK, "industry", "sector", new Dividend(0L, 0d, 0d, 0d, 0d, 0L), List.of(new HistoricalDividend(0L, 0d, 0L)), List.of(new HistoricalPricing(0L, 0d, 0L, 0d, 0L))))), null, 200), result);
     }
 
     @Test
     void testCreatePortfolioEntry() {
-        when(portfolioEntryService.createPortfolioEntry(any(PortfolioEntry.class))).thenReturn(
-                new PortfolioEntry(1L,
-                        new Portfolio(0L, "name",
-                                new User(1L, "username", "email", "password", "firstName", "lastName", "phone", "address", "city",
-                                        new Subscription(1L, true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.NOVEMBER, 30, 22, 59, 13), LocalDateTime.of(2024, Month.NOVEMBER, 30, 22, 59, 13)))),
-                        new Stock(0L, "ticker", "name", "country", "exchange", Currency.DKK, "industry", "sector",
-                                new Dividend(0L, 0d, 0d, 0d, 0d, 0L),
-                                List.of(new HistoricalDividend(0L, 0d, 0L)),
-                                List.of(new HistoricalPricing(0L, 0d, 0L, 0d, 0L)))));
+        when(portfolioEntryService.createPortfolioEntry(any(PortfolioEntry.class))).thenReturn(new PortfolioEntry(Long.valueOf(1), new Portfolio(0L, "name", new User(Long.valueOf(1), "username", "email", "password", "firstName", "lastName", "phone", "address", "city", new Subscription(Long.valueOf(1), true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.DECEMBER, 1, 17, 19, 18), LocalDateTime.of(2024, Month.DECEMBER, 1, 17, 19, 18)))), new Stock(0L, "ticker", "name", "country", "exchange", Currency.DKK, "industry", "sector", new Dividend(0L, 0d, 0d, 0d, 0d, 0L), List.of(new HistoricalDividend(0L, 0d, 0L)), List.of(new HistoricalPricing(0L, 0d, 0L, 0d, 0L)))));
 
-        ResponseEntity<PortfolioEntry> result = portfolioController.createPortfolioEntry(
-                new PortfolioEntry(1L,
-                        new Portfolio(0L, "name",
-                                new User(1L, "username", "email", "password", "firstName", "lastName", "phone", "address", "city",
-                                        new Subscription(1L, true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.NOVEMBER, 30, 22, 59, 13), LocalDateTime.of(2024, Month.NOVEMBER, 30, 22, 59, 13)))),
-                        new Stock(0L, "ticker", "name", "country", "exchange", Currency.DKK, "industry", "sector",
-                                new Dividend(0L, 0d, 0d, 0d, 0d, 0L),
-                                List.of(new HistoricalDividend(0L, 0d, 0L)),
-                                List.of(new HistoricalPricing(0L, 0d, 0L, 0d, 0L)))));
-        Assertions.assertEquals(new ResponseEntity<>(
-                new PortfolioEntry(1L,
-                        new Portfolio(0L, "name",
-                                new User(1L, "username", "email", "password", "firstName", "lastName", "phone", "address", "city",
-                                        new Subscription(1L, true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.NOVEMBER, 30, 22, 59, 13), LocalDateTime.of(2024, Month.NOVEMBER, 30, 22, 59, 13)))),
-                        new Stock(0L, "ticker", "name", "country", "exchange", Currency.DKK, "industry", "sector",
-                                new Dividend(0L, 0d, 0d, 0d, 0d, 0L),
-                                List.of(new HistoricalDividend(0L, 0d, 0L)),
-                                List.of(new HistoricalPricing(0L, 0d, 0L, 0d, 0L)))), null, 200), result);
+        ResponseEntity<PortfolioEntry> result = portfolioController.createPortfolioEntry(new PortfolioEntry(Long.valueOf(1), new Portfolio(0L, "name", new User(Long.valueOf(1), "username", "email", "password", "firstName", "lastName", "phone", "address", "city", new Subscription(Long.valueOf(1), true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.DECEMBER, 1, 17, 19, 18), LocalDateTime.of(2024, Month.DECEMBER, 1, 17, 19, 18)))), new Stock(0L, "ticker", "name", "country", "exchange", Currency.DKK, "industry", "sector", new Dividend(0L, 0d, 0d, 0d, 0d, 0L), List.of(new HistoricalDividend(0L, 0d, 0L)), List.of(new HistoricalPricing(0L, 0d, 0L, 0d, 0L)))));
+        Assertions.assertEquals(new ResponseEntity<PortfolioEntry>(new PortfolioEntry(Long.valueOf(1), new Portfolio(0L, "name", new User(Long.valueOf(1), "username", "email", "password", "firstName", "lastName", "phone", "address", "city", new Subscription(Long.valueOf(1), true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.DECEMBER, 1, 17, 19, 18), LocalDateTime.of(2024, Month.DECEMBER, 1, 17, 19, 18)))), new Stock(0L, "ticker", "name", "country", "exchange", Currency.DKK, "industry", "sector", new Dividend(0L, 0d, 0d, 0d, 0d, 0L), List.of(new HistoricalDividend(0L, 0d, 0L)), List.of(new HistoricalPricing(0L, 0d, 0L, 0d, 0L)))), null, 200), result);
     }
 }
+
+//Generated with love by TestMe :) Please raise issues & feature requests at: https://weirddev.com/forum#!/testme

@@ -23,6 +23,10 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject); //when you call the getSubject you normally refer to the sub: field in the jwt, which can contain an id or just the username
     }
 
+    public String extractUserId(String token) {
+        return extractClaim(token, claims -> claims.get("userId").toString());
+    }
+
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);

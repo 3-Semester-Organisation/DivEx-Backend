@@ -7,7 +7,7 @@ import java.util.List;
 public interface PortfolioService {
 
     List<Portfolio> getPortfolios(Integer userId);
-    Portfolio createPortfolio(Portfolio portfolio);
+    Portfolio createPortfolio(String portfolioName, Long userId);
 
 
 }

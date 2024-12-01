@@ -1,11 +1,14 @@
 package godevenner.divexbackend.portfolio.controller;
 
+import godevenner.divexbackend.config.JwtService;
+import godevenner.divexbackend.portfolio.dto.CreatePortfolioRequest;
 import godevenner.divexbackend.portfolio.model.Portfolio;
 import godevenner.divexbackend.portfolio.model.PortfolioEntry;
 import godevenner.divexbackend.portfolio.service.PortfolioEntryService;
 import godevenner.divexbackend.portfolio.service.PortfolioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +20,7 @@ public class PortfolioController {
 
     private final PortfolioService portfolioService;
     private final PortfolioEntryService portfolioEntryService;
+    private final JwtService jwtService;
 
     @GetMapping("/portfolio")
     public ResponseEntity<List<Portfolio>> getPortfolios(@RequestBody Integer userId) {
@@ -24,10 +28,13 @@ public class PortfolioController {
         return ResponseEntity.ok(portfolio);
     }
 
+    // this shit do be bussin respectfully
     @PostMapping("/portfolio")
-    public ResponseEntity<Portfolio> createPortfolio(@RequestBody Portfolio portfolio) {
-        Portfolio createdPortfolio = portfolioService.createPortfolio(portfolio);
-        return ResponseEntity.ok(createdPortfolio);
+    public ResponseEntity<Portfolio> createPortfolio(@RequestBody CreatePortfolioRequest createPortfolioRequest, @RequestHeader("Authorization") String authorizationHeader) {
+        String token = authorizationHeader.replace("Bearer ", "");
+        String userId = jwtService.extractUserId(token);
+        Portfolio portfolio = portfolioService.createPortfolio(createPortfolioRequest.portfolioName(), Long.parseLong(userId));
+        return ResponseEntity.ok(portfolio);
     }
 
     @GetMapping("/portfolioentries")
