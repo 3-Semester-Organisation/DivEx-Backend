@@ -37,19 +37,19 @@ class PortfolioEntryServiceImplTest {
     @Test
     void testGetPortfolioEntries() {
         when(portfolioEntryRepository.findByPortfolioId(anyInt())).thenReturn(List.of(new PortfolioEntry(1L,
-                new Portfolio(0L, "name",
+                new Portfolio(0L, "portfolioName",
                         new User(1L, "username", "email", "password", "firstName", "lastName", "phone", "address", "city",
                                 new Subscription(1L, true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.NOVEMBER, 30, 23, 17, 15), LocalDateTime.of(2024, Month.NOVEMBER, 30, 23, 17, 15)))),
-                new Stock(0L, "ticker", "name", "country", "exchange", Currency.DKK, "industry", "sector",
+                new Stock(0L, "ticker", "portfolioName", "country", "exchange", Currency.DKK, "industry", "sector",
                         new Dividend(0L, 0d, 0d, 0d, 0d, 0L),
                         List.of(new HistoricalDividend(0L, 0d, 0L)),
                         List.of(new HistoricalPricing(0L, 0d, 0L, 0d, 0L))))));
 
         List<PortfolioEntry> result = portfolioEntryServiceImpl.getPortfolioEntries(0);
         Assertions.assertEquals(List.of(new PortfolioEntry(1L,
-                new Portfolio(0L, "name", new User(1L, "username", "email", "password", "firstName", "lastName", "phone", "address", "city",
+                new Portfolio(0L, "portfolioName", new User(1L, "username", "email", "password", "firstName", "lastName", "phone", "address", "city",
                         new Subscription(1L, true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.NOVEMBER, 30, 23, 17, 15), LocalDateTime.of(2024, Month.NOVEMBER, 30, 23, 17, 15)))),
-                new Stock(0L, "ticker", "name", "country", "exchange", Currency.DKK, "industry", "sector",
+                new Stock(0L, "ticker", "portfolioName", "country", "exchange", Currency.DKK, "industry", "sector",
                         new Dividend(0L, 0d, 0d, 0d, 0d, 0L),
                         List.of(new HistoricalDividend(0L, 0d, 0L)),
                         List.of(new HistoricalPricing(0L, 0d, 0L, 0d, 0L))))), result);
@@ -58,12 +58,12 @@ class PortfolioEntryServiceImplTest {
     @Test
     void testCreatePortfolioEntry() {
         PortfolioEntry mockPortfolioEntry = new PortfolioEntry(1L,
-                new Portfolio(0L, "name",
+                new Portfolio(0L, "portfolioName",
                         new User(1L, "username", "email", "password", "firstName", "lastName", "phone", "address", "city",
                                 new Subscription(1L, true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.NOVEMBER, 30, 23, 17, 15), LocalDateTime.of(2024, Month.NOVEMBER, 30, 23, 17, 15))
                         )
                 ),
-                new Stock(0L, "ticker", "name", "country", "exchange", Currency.DKK, "industry", "sector",
+                new Stock(0L, "ticker", "portfolioName", "country", "exchange", Currency.DKK, "industry", "sector",
                         new Dividend(0L, 0d, 0d, 0d, 0d, 0L),
                         List.of(new HistoricalDividend(0L, 0d, 0L)),
                         List.of(new HistoricalPricing(0L, 0d, 0L, 0d, 0L))

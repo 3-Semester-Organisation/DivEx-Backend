@@ -8,7 +8,6 @@ import godevenner.divexbackend.portfolio.service.PortfolioEntryService;
 import godevenner.divexbackend.portfolio.service.PortfolioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +22,10 @@ public class PortfolioController {
     private final JwtService jwtService;
 
     @GetMapping("/portfolio")
-    public ResponseEntity<List<Portfolio>> getPortfolios(@RequestBody Integer userId) {
-        List<Portfolio> portfolio = portfolioService.getPortfolios(userId);
+    public ResponseEntity<List<Portfolio>> getPortfolios(@RequestHeader("Authorization") String authorizationHeader) {
+        String token = authorizationHeader.replace("Bearer ", "");
+        String userId = jwtService.extractUserId(token);
+        List<Portfolio> portfolio = portfolioService.getPortfolios(Long.parseLong(userId));
         return ResponseEntity.ok(portfolio);
     }
 
