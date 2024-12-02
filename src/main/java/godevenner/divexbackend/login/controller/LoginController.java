@@ -32,14 +32,11 @@ public class LoginController {
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody ShortRegisterRequest registerRequest) {
 
-        Optional<User> isUsernameTaken = userService.findByUsername(registerRequest.username());
-        if (isUsernameTaken.isPresent()) {
-            throw new UsernameTakenException("Username already taken.");
-        }
-        Optional<User> isEmailTaken = userService.findByEmail(registerRequest.email());
-        if (isEmailTaken.isPresent()) {
-            throw new EmailTakenException("Email already taken.");
-        }
+        boolean isUsernameTaken = userService.existsByUsername(registerRequest.username());
+        if (isUsernameTaken) throw new UsernameTakenException("Username already taken.");
+
+        boolean isEmailTaken = userService.existsByEmail(registerRequest.email());
+        if (isEmailTaken) throw new EmailTakenException("Email already taken.");
 
         AuthenticationResponse authenticationResponse = loginService.shortRegister(registerRequest);
         return ResponseEntity.ok(authenticationResponse);
