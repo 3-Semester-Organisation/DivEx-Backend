@@ -1,26 +1,28 @@
 package godevenner.divexbackend.stock.service;
 
 import godevenner.divexbackend.stock.dto.StockPopularity;
+import godevenner.divexbackend.stock.model.Stock;
 import godevenner.divexbackend.stock.repository.StockRepository;
 import godevenner.divexbackend.tracker.TrackLog;
 import godevenner.divexbackend.tracker.TrackLogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class PopularityServiceImpl implements PopularityService {
 
+    private final StockRepository stockRepository;
     private final TrackLogRepository trackLogRepository;
 
 
     @Override
     public StockPopularity getPopularityByStockId(int stockId) {
 
-        List<TrackLog> logs = trackLogRepository.findAllByStockId(stockId);
-        int stockVisits = logs.size();
+        int stockVisits = trackLogRepository.countByStockId(stockId);
 
         StockPopularity stockPopularity = new StockPopularity(stockId, stockVisits);
 
@@ -29,7 +31,20 @@ public class PopularityServiceImpl implements PopularityService {
 
     @Override
     public List<StockPopularity> getAllStockPopularities() {
-        return List.of();
+
+        List<StockPopularity> stockPopularities = new ArrayList<>();
+
+        List<Stock> stocks = stockRepository.findAll();
+        for (Stock stock : stocks) {
+            stockPopularities.add(
+                    new StockPopularity(
+                            stock.getId(),
+                            trackLogRepository.countByStockId(stock.getId())
+                    )
+            );
+        }
+
+        return stockPopularities;
     }
 
     @Override

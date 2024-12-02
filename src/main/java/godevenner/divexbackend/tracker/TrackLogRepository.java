@@ -8,4 +8,5 @@ public interface TrackLogRepository extends JpaRepository<TrackLog, Long> {
 
     List<TrackLog> findAllByStockId(long stockId);
 
+    int countByStockId(long stockId);
 }
