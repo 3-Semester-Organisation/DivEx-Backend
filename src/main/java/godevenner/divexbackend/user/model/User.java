@@ -1,7 +1,6 @@
 package godevenner.divexbackend.user.model;
 
 import godevenner.divexbackend.subscription.model.Subscription;
-import godevenner.divexbackend.subscription.model.SubscriptionType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -5,21 +5,13 @@ import godevenner.divexbackend.exception.EmailTakenException;
 import godevenner.divexbackend.exception.UsernameTakenException;
 import godevenner.divexbackend.login.dto.AuthenticationResponse;
 import godevenner.divexbackend.login.dto.LoginRequest;
-import godevenner.divexbackend.login.dto.RegisterRequest;
 import godevenner.divexbackend.login.dto.ShortRegisterRequest;
 import godevenner.divexbackend.login.service.LoginService;
-import godevenner.divexbackend.user.model.User;
 import godevenner.divexbackend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")

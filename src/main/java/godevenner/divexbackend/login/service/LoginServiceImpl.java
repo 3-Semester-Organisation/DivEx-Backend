@@ -1,15 +1,12 @@
 package godevenner.divexbackend.login.service;
 
-import godevenner.divexbackend.config.JwtService;
 import godevenner.divexbackend.login.dto.AuthenticationResponse;
 import godevenner.divexbackend.login.dto.LoginRequest;
 import godevenner.divexbackend.login.dto.RegisterRequest;
 import godevenner.divexbackend.login.dto.ShortRegisterRequest;
 import godevenner.divexbackend.subscription.model.Subscription;
 import godevenner.divexbackend.subscription.model.SubscriptionType;
-import godevenner.divexbackend.subscription.model.repository.SubscriptionRepository;
 import godevenner.divexbackend.user.model.User;
-import godevenner.divexbackend.user.repository.UserRepository;
 import godevenner.divexbackend.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,8 +16,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +25,6 @@ public class LoginServiceImpl implements LoginService {
     private final UserServiceImpl userService;
     private final AuthenticationManager authenticationManager;
 
-    private final SubscriptionRepository subscriptionRepository;
 
     @Override
     public AuthenticationResponse register(RegisterRequest registerRequest) {
