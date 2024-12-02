@@ -1,6 +1,11 @@
 package godevenner.divexbackend.stock.dto;
 
-public record PopularityResponse(
+import godevenner.divexbackend.stock.model.AccessType;
 
+public record PopularityResponse(
+    long accessDate,
+    long stockId,
+    long userId,
+    AccessType accessType
 ){
 }

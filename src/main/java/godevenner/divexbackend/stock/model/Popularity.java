@@ -24,6 +24,10 @@ public class Popularity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "stock_id")
+    private Stock stock;
+
     @Enumerated(EnumType.STRING)
     private AccessType accessType;
 }
