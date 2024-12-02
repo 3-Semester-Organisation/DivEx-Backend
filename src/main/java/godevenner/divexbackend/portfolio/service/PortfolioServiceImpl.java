@@ -17,7 +17,7 @@ public class PortfolioServiceImpl implements PortfolioService {
     private final PortfolioRepository portfolioRepository;
     private final UserRepository userRepository;
 
-    public List<Portfolio> getPortfolios(Integer userId) {
+    public List<Portfolio> getPortfolios(Long userId) {
         return portfolioRepository.findByUserId(userId);
     }
 
@@ -27,6 +27,7 @@ public class PortfolioServiceImpl implements PortfolioService {
         if (user.isEmpty()) {
             throw new RuntimeException("User not found");
         }
+        System.out.println("portfolioname: " + portfolioName);
         portfolio.setName(portfolioName);
         portfolio.setUser(user.get());
 
