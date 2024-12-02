@@ -39,8 +39,8 @@ public class PortfolioController {
 
     @GetMapping("/portfolioentries")
     public ResponseEntity<List<PortfolioEntry>> getPortfolioEntries(@RequestBody Integer userId) {
-        List<PortfolioEntry> portfolioentries = portfolioEntryService.getPortfolioEntries(userId);
-        return ResponseEntity.ok(portfolioentries);
+        List<PortfolioEntry> portfolioEntries = portfolioEntryService.getPortfolioEntries(userId);
+        return ResponseEntity.ok(portfolioEntries);
     }
 
     @PostMapping("/portfolioentry")

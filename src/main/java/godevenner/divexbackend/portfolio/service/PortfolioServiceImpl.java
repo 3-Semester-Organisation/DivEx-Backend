@@ -27,6 +27,11 @@ public class PortfolioServiceImpl implements PortfolioService {
         if (user.isEmpty()) {
             throw new RuntimeException("User not found");
         }
+        Optional<Portfolio> namedPortfolio = portfolioRepository.findByName(portfolioName);
+        if(namedPortfolio.isPresent()) {
+            throw new RuntimeException("Portfolio already exists");
+        }
+
         portfolio.setName(portfolioName);
         portfolio.setUser(user.get());
 
