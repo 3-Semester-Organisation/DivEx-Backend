@@ -29,4 +29,5 @@ public class StockController {
         StockResponse stockResponse = stockService.getStock(ticker);
         return ResponseEntity.ok(stockResponse);
     }
+
 }

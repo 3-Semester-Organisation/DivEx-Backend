@@ -42,4 +42,8 @@ public class Stock {
     @JoinColumn(name = "stock_id")
     private List<HistoricalPricing> historicalPricings;
 
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "stock_id")
+    private List<Popularity> popularityList;
+
 }
