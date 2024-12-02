@@ -10,5 +10,5 @@ public interface PopularityService {
 
     List<StockPopularity> getAllStockPopularities();
 
-    List<StockPopularity>
+    List<StockPopularity> getStocksInOrderOfPopularity();
 }
