@@ -10,6 +10,7 @@ import godevenner.divexbackend.subscription.model.SubscriptionType;
 import godevenner.divexbackend.subscription.model.repository.SubscriptionRepository;
 import godevenner.divexbackend.user.model.User;
 import godevenner.divexbackend.user.repository.UserRepository;
+import godevenner.divexbackend.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -26,9 +27,9 @@ import java.util.Map;
 public class LoginServiceImpl implements LoginService {
 
     private final PasswordEncoder passwordEncoder;
-    private final UserRepository userRepository;
+    private final UserServiceImpl userService;
     private final AuthenticationManager authenticationManager;
-    private final JwtService jwtService;
+
     private final SubscriptionRepository subscriptionRepository;
 
     @Override
@@ -50,9 +51,9 @@ public class LoginServiceImpl implements LoginService {
                 .city(registerRequest.city())
                 .build();
 
-        userRepository.save(newUser);
+        userService.save(newUser);
 
-        return generatedAuthenticationResponse(newUser);
+        return userService.generatedAuthenticationResponse(newUser);
     }
 
 
@@ -79,9 +80,9 @@ public class LoginServiceImpl implements LoginService {
                 .password(passwordEncoder.encode(shortRegisterRequest.password()))
                 .build();
 
-        userRepository.save(newUser);
+        userService.save(newUser);
 
-        return generatedAuthenticationResponse(newUser);
+        return userService.generatedAuthenticationResponse(newUser);
     }
 
     @Override
@@ -98,17 +99,11 @@ public class LoginServiceImpl implements LoginService {
             throw new BadCredentialsException("Invalid username or password", e);
         }
 
-        User user = userRepository.findByUsername(loginRequest.username())
+        User user = userService.findByUsername(loginRequest.username())
                 .orElseThrow();
 
-        return generatedAuthenticationResponse(user);
+        return userService.generatedAuthenticationResponse(user);
     }
 
-    private AuthenticationResponse generatedAuthenticationResponse(User user) {
-        Map<String, Object> extraClaims = new HashMap<>();
-        extraClaims.put("subscriptionType", user.getSubscription().getSubscriptionType());
-        extraClaims.put("userId", user.getId());
-        String token = jwtService.generateToken(extraClaims, user);
-        return new AuthenticationResponse(token);
-    }
+
 }
