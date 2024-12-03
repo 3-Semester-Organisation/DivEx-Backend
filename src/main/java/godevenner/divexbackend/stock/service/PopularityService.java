@@ -9,6 +9,8 @@ public interface PopularityService {
     StockPopularity getPopularityByStockId(int stockId);
 
     List<StockPopularity> getAllStockPopularities();
+    List<StockPopularity> getAllStockPopularitiesForWeek();
+    List<StockPopularity> getAllStockPopularitiesForMonth();
 
     List<StockPopularity> getStocksInOrderOfPopularity();
 }
