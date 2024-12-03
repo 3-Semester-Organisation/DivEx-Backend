@@ -59,6 +59,11 @@ public class PopularityServiceImpl implements PopularityService {
             );
         }
 
+        //sorting (should probably be changed later
+        Comparator<StockPopularity> popularityComparator = new PopularityComparator();
+
+        stockPopularities.sort(popularityComparator);
+
         return stockPopularities;
     }
 
