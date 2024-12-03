@@ -142,7 +142,7 @@ class StockServiceImplTest {
         Mockito.when(stockResponseMapper.toStockResponse(ArgumentMatchers.any(Stock.class))).thenReturn(appleStockResponse);
 
         StockResponse expectedResult = appleStockResponse;
-        StockResponse actualResult = stockService.getStock("APPL");
+        StockResponse actualResult = stockService.getStockByTicker("APPL");
 
         assertEquals(expectedResult, actualResult);
     }
@@ -151,6 +151,6 @@ class StockServiceImplTest {
     @Test
     void getStockByTickerFail() {
         Mockito.when(stockRepository.findByTicker(ArgumentMatchers.anyString())).thenThrow(new InvalidTickerException("Invalid ticker: X"));
-        assertThrows(InvalidTickerException.class, () -> stockService.getStock("X"));
+        assertThrows(InvalidTickerException.class, () -> stockService.getStockByTicker("X"));
     }
 }

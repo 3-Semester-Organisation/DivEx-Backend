@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class StockServiceImpl implements StockService {
@@ -18,6 +20,12 @@ public class StockServiceImpl implements StockService {
     private final StockResponseMapper stockResponseMapper;
 
 
+    @Override
+    public List<StockResponse> getStocksByNameOrTicker(String searchTerm) {
+        return stockRepository.findByNameOrTicker(searchTerm).stream()
+                .map(stockResponseMapper::toStockResponse)
+                .toList();
+    }
 
     @Override
     public Page<StockResponse> getAllStocks(Pageable pageable) {
@@ -26,7 +34,7 @@ public class StockServiceImpl implements StockService {
 
 
     @Override
-    public StockResponse getStock(String ticker) {
+    public StockResponse getStockByTicker(String ticker) {
         Stock stock = stockRepository.findByTicker(ticker).orElseThrow( () -> new InvalidTickerException("Invalid ticker: " + ticker));
         StockResponse response = stockResponseMapper.toStockResponse(stock);
         return response;

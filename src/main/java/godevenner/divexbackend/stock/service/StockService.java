@@ -5,9 +5,13 @@ import godevenner.divexbackend.stock.model.Stock;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface StockService {
 
-    StockResponse getStock(String ticker);
+    StockResponse getStockByTicker(String ticker);
+
+    List<StockResponse> getStocksByNameOrTicker(String searchTerm);
 
     Page<StockResponse> getAllStocks(Pageable pageable);
 }
