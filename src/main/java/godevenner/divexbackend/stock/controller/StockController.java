@@ -2,6 +2,7 @@ package godevenner.divexbackend.stock.controller;
 
 import godevenner.divexbackend.stock.dto.StockPopularity;
 import godevenner.divexbackend.stock.dto.StockResponse;
+import godevenner.divexbackend.stock.service.PopularityService;
 import godevenner.divexbackend.stock.service.StockService;
 import godevenner.divexbackend.tracker.TrackerService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ public class StockController {
 
     private final StockService stockService;
     private final TrackerService trackerService;
+    private final PopularityService popularityService;
 
 
     @GetMapping("/stocks")
@@ -39,5 +41,30 @@ public class StockController {
     }
 
     @GetMapping("/stock/popularity/week")
-    public ResponseEntity<List<StockPopularity>> get
+    public ResponseEntity<List<StockPopularity>> getStockPopularityWeek(){
+        List<StockPopularity> weeklyStockPopularities = popularityService.getAllStockPopularitiesForWeek();
+        return ResponseEntity.ok(weeklyStockPopularities);
+    }
+
+    @GetMapping("/stock/popularity/month")
+    public ResponseEntity<List<StockPopularity>> getStockPopularityMonth(){
+        List<StockPopularity> monthlyStockPopularities = popularityService.getAllStockPopularitiesForMonth();
+
+        return ResponseEntity.ok(monthlyStockPopularities);
+    }
+
+    @GetMapping("/stock/popularity/all")
+    public ResponseEntity<List<StockPopularity>> getAllStockPopularities(){
+        List<StockPopularity> allStockPopularities = popularityService.getAllStockPopularities();
+
+        return ResponseEntity.ok(allStockPopularities);
+    }
+
+    @GetMapping("/stock/{id}/popularity")
+    public ResponseEntity<StockPopularity> getAllStockPopularityByStockId(@PathVariable String id){
+        StockPopularity stockPopularityByStockId = popularityService.
+                getPopularityByStockId(Integer.parseInt(id));
+
+        return ResponseEntity.ok(stockPopularityByStockId);
+    }
 }
