@@ -15,7 +15,7 @@ public class SubscriptionController {
     private final SubscriptionService subscriptionService;
 
     @PutMapping("/upgrade")
-    public ResponseEntity<AuthenticationResponse> changeSubscription(@RequestBody ChangeSubscriptionRequest changeSubscriptionRequest) {
+    public ResponseEntity<AuthenticationResponse> changeSubscription(@RequestBody ChangeSubscriptionRequest changeSubscriptionRequest, @RequestHeader("Authorization") String authorizationHeader) {
 
         AuthenticationResponse authenticationResponse = subscriptionService.changeSubscriptionById(changeSubscriptionRequest);
 
