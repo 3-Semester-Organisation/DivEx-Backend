@@ -10,6 +10,7 @@ import java.util.List;
 public interface PortfolioRepository extends JpaRepository<Portfolio, Integer> {
 
     List<Portfolio> findByUserId(Long userId);
+    Portfolio findById(long id);
 
 
 
