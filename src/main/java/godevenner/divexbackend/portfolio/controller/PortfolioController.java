@@ -38,11 +38,11 @@ public class PortfolioController {
         return ResponseEntity.ok(portfolio);
     }
 
-    @GetMapping("/portfolioentries")
-    public ResponseEntity<List<PortfolioEntry>> getPortfolioEntries(@RequestBody Long userId) {
-        List<PortfolioEntry> portfolioentries = portfolioEntryService.getPortfolioEntries(userId);
-        return ResponseEntity.ok(portfolioentries);
-    }
+
+
+
+
+
 
     @PostMapping("/portfolioentry")
     public ResponseEntity<PortfolioEntry> createPortfolioEntry(@RequestBody PortfolioEntry portfolioEntry) {

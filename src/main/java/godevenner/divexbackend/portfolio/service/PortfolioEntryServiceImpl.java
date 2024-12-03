@@ -13,10 +13,6 @@ public class PortfolioEntryServiceImpl implements PortfolioEntryService {
 
     private final PortfolioEntryRepository portfolioEntryRepository;
 
-    public List<PortfolioEntry> getPortfolioEntries(Long userId) {
-        return portfolioEntryRepository.findByPortfolioId(userId);
-    }
-
     public PortfolioEntry createPortfolioEntry(PortfolioEntry portfolioEntry) {
         return portfolioEntryRepository.save(portfolioEntry);
     }
