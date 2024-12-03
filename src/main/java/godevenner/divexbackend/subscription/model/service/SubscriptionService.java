@@ -5,5 +5,5 @@ import godevenner.divexbackend.user.dto.ChangeSubscriptionRequest;
 
 public interface SubscriptionService {
 
-    AuthenticationResponse changeSubscriptionById(ChangeSubscriptionRequest changeSubscriptionRequest);
+    AuthenticationResponse changeSubscriptionById(long id, ChangeSubscriptionRequest changeSubscriptionRequest);
 }

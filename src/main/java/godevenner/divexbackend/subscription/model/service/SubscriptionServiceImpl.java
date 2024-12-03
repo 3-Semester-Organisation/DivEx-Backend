@@ -22,12 +22,11 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     private final UserService userService;
 
     @Override
-    public AuthenticationResponse changeSubscriptionById(ChangeSubscriptionRequest changeSubscriptionRequest) {
-        long subscriptionId = changeSubscriptionRequest.subscriptionId();
+    public AuthenticationResponse changeSubscriptionById(long id, ChangeSubscriptionRequest changeSubscriptionRequest) {
         SubscriptionType newSubscriptionType = changeSubscriptionRequest.newSubscriptionType();
 
 
-        Subscription subscription = subscriptionRepository.findById(subscriptionId).orElseThrow();
+        Subscription subscription = subscriptionRepository.findById(id).orElseThrow();
 
 
         subscription.setSubscriptionType(newSubscriptionType);
@@ -38,7 +37,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 
         subscriptionRepository.save(subscription);
-        User user = userRepository.findById(subscriptionId).orElseThrow();
+        User user = userRepository.findById(id).orElseThrow();
 
         return userService.generatedAuthenticationResponse(user);
     }
