@@ -16,8 +16,6 @@ public interface UserService {
 
     boolean existsByEmail(String email);
 
-    AuthenticationResponse changeUserSubscription(ChangeSubscriptionRequest changeSubscriptionRequest);
-
     User save(User newUser);
 
     AuthenticationResponse generatedAuthenticationResponse(User user);

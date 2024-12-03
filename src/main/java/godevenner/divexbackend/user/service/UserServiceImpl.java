@@ -47,33 +47,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(newUser);
     }
 
-    @Override
-    public AuthenticationResponse changeUserSubscription(ChangeSubscriptionRequest changeSubscriptionRequest) {
-        String username = changeSubscriptionRequest.username();
-        SubscriptionType newSubscriptionType = changeSubscriptionRequest.newSubscriptionType();
-        int lengthOfNewSubscriptionInDays = changeSubscriptionRequest.lengthOfNewSubscriptionInDays();
 
-
-        User user = userRepository.findByUsername(username).orElseThrow();
-
-        Subscription subscription = user.getSubscription();
-
-        subscription.setSubscriptionType(newSubscriptionType);
-
-        subscription.setLastPayment(LocalDateTime.now());
-
-        // Beregn næste betalingstidspunkt
-        LocalDateTime nextPayment = subscription.getNextPayment();
-        if (nextPayment == null) {
-            subscription.setNextPayment(LocalDateTime.now().plusDays(lengthOfNewSubscriptionInDays));
-        } else {
-            subscription.setNextPayment(nextPayment.plusDays(lengthOfNewSubscriptionInDays));
-        }
-
-        userRepository.save(user);
-
-        return generatedAuthenticationResponse(user);
-    }
 
     @Override
     public AuthenticationResponse generatedAuthenticationResponse(User user) {

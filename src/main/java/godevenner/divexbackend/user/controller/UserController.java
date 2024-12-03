@@ -11,21 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/membership")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
 
-    @PostMapping("/upgrade")
-    public ResponseEntity<AuthenticationResponse> changeSubscription(@RequestBody ChangeSubscriptionRequest changeSubscriptionRequest) {
 
-        AuthenticationResponse authenticationResponse = userService.changeUserSubscription(changeSubscriptionRequest);
-
-        return ResponseEntity.ok(authenticationResponse);
-
-    }
 }
 
 
