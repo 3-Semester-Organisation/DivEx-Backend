@@ -1,8 +1,8 @@
-package godevenner.divexbackend.subscription.model.controller;
+package godevenner.divexbackend.subscription.controller;
 
 import godevenner.divexbackend.config.JwtService;
 import godevenner.divexbackend.login.dto.AuthenticationResponse;
-import godevenner.divexbackend.subscription.model.service.SubscriptionService;
+import godevenner.divexbackend.subscription.service.SubscriptionService;
 import godevenner.divexbackend.user.dto.ChangeSubscriptionRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

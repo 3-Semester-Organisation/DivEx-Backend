@@ -1,4 +1,4 @@
-package godevenner.divexbackend.subscription.model.service;
+package godevenner.divexbackend.subscription.service;
 
 import godevenner.divexbackend.login.dto.AuthenticationResponse;
 import godevenner.divexbackend.user.dto.ChangeSubscriptionRequest;

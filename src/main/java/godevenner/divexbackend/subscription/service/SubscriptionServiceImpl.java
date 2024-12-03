@@ -1,9 +1,9 @@
-package godevenner.divexbackend.subscription.model.service;
+package godevenner.divexbackend.subscription.service;
 
 import godevenner.divexbackend.login.dto.AuthenticationResponse;
-import godevenner.divexbackend.subscription.model.Subscription;
-import godevenner.divexbackend.subscription.model.SubscriptionType;
-import godevenner.divexbackend.subscription.model.repository.SubscriptionRepository;
+import godevenner.divexbackend.subscription.Subscription;
+import godevenner.divexbackend.subscription.SubscriptionType;
+import godevenner.divexbackend.subscription.repository.SubscriptionRepository;
 import godevenner.divexbackend.user.dto.ChangeSubscriptionRequest;
 import godevenner.divexbackend.user.model.User;
 import godevenner.divexbackend.user.repository.UserRepository;

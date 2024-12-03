@@ -1,4 +1,4 @@
-package godevenner.divexbackend.subscription.model;
+package godevenner.divexbackend.subscription;
 
 public enum SubscriptionType {
 

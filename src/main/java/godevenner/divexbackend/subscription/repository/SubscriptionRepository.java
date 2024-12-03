@@ -1,6 +1,6 @@
-package godevenner.divexbackend.subscription.model.repository;
+package godevenner.divexbackend.subscription.repository;
 
-import godevenner.divexbackend.subscription.model.Subscription;
+import godevenner.divexbackend.subscription.Subscription;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
