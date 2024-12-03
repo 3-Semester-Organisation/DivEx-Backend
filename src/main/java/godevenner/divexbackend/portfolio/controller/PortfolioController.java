@@ -39,7 +39,7 @@ public class PortfolioController {
     }
 
     @GetMapping("/portfolioentries")
-    public ResponseEntity<List<PortfolioEntry>> getPortfolioEntries(@RequestBody Integer userId) {
+    public ResponseEntity<List<PortfolioEntry>> getPortfolioEntries(@RequestBody Long userId) {
         List<PortfolioEntry> portfolioentries = portfolioEntryService.getPortfolioEntries(userId);
         return ResponseEntity.ok(portfolioentries);
     }
