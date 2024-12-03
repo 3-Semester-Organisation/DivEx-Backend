@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
@@ -26,7 +28,14 @@ public class StockController {
 
     @GetMapping("/stock/{ticker}")
     public ResponseEntity<StockResponse> getStock(@PathVariable String ticker) {
-        StockResponse stockResponse = stockService.getStock(ticker);
+        StockResponse stockResponse = stockService.getStockByTicker(ticker);
+        return ResponseEntity.ok(stockResponse);
+    }
+
+
+    @GetMapping("/stocks/{searchTerm}")
+    public ResponseEntity<List<StockResponse>> get(@PathVariable String searchTerm) {
+        List<StockResponse> stockResponse = stockService.getStocksByNameOrTicker(searchTerm);
         return ResponseEntity.ok(stockResponse);
     }
 }
