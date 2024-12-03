@@ -18,7 +18,7 @@ public interface UserService {
 
     AuthenticationResponse changeUserSubscription(ChangeSubscriptionRequest changeSubscriptionRequest);
 
-    void save(User newUser);
+    User save(User newUser);
 
     AuthenticationResponse generatedAuthenticationResponse(User user);
 }
