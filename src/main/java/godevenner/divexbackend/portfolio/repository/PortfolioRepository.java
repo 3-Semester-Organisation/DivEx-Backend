@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface PortfolioRepository extends JpaRepository<Portfolio, Integer> {
 
-    List<Portfolio> findByUserId(Integer userId);
+    List<Portfolio> findByUserId(Long userId);
 
 
 

@@ -1,15 +1,13 @@
 package godevenner.divexbackend.login.service;
 
-import godevenner.divexbackend.config.JwtService;
 import godevenner.divexbackend.login.dto.AuthenticationResponse;
 import godevenner.divexbackend.login.dto.LoginRequest;
 import godevenner.divexbackend.login.dto.RegisterRequest;
 import godevenner.divexbackend.login.dto.ShortRegisterRequest;
-import godevenner.divexbackend.subscription.model.Subscription;
-import godevenner.divexbackend.subscription.model.SubscriptionType;
-import godevenner.divexbackend.subscription.model.repository.SubscriptionRepository;
+import godevenner.divexbackend.subscription.Subscription;
+import godevenner.divexbackend.subscription.SubscriptionType;
 import godevenner.divexbackend.user.model.User;
-import godevenner.divexbackend.user.repository.UserRepository;
+import godevenner.divexbackend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -18,18 +16,15 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService {
 
     private final PasswordEncoder passwordEncoder;
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final AuthenticationManager authenticationManager;
-    private final JwtService jwtService;
-    private final SubscriptionRepository subscriptionRepository;
+
 
     @Override
     public AuthenticationResponse register(RegisterRequest registerRequest) {
@@ -50,9 +45,9 @@ public class LoginServiceImpl implements LoginService {
                 .city(registerRequest.city())
                 .build();
 
-        userRepository.save(newUser);
+        userService.save(newUser);
 
-        return generatedAuthenticationResponse(newUser);
+        return userService.generatedAuthenticationResponse(newUser);
     }
 
 
@@ -79,9 +74,9 @@ public class LoginServiceImpl implements LoginService {
                 .password(passwordEncoder.encode(shortRegisterRequest.password()))
                 .build();
 
-        userRepository.save(newUser);
+        userService.save(newUser);
 
-        return generatedAuthenticationResponse(newUser);
+        return userService.generatedAuthenticationResponse(newUser);
     }
 
     @Override
@@ -98,17 +93,11 @@ public class LoginServiceImpl implements LoginService {
             throw new BadCredentialsException("Invalid username or password", e);
         }
 
-        User user = userRepository.findByUsername(loginRequest.username())
+        User user = userService.findByUsername(loginRequest.username())
                 .orElseThrow();
 
-        return generatedAuthenticationResponse(user);
+        return userService.generatedAuthenticationResponse(user);
     }
 
-    private AuthenticationResponse generatedAuthenticationResponse(User user) {
-        Map<String, Object> extraClaims = new HashMap<>();
-        extraClaims.put("subscriptionType", user.getSubscription().getSubscriptionType());
-        extraClaims.put("userId", user.getId());
-        String token = jwtService.generateToken(extraClaims, user);
-        return new AuthenticationResponse(token);
-    }
+
 }
