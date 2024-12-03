@@ -7,6 +7,7 @@ import godevenner.divexbackend.login.dto.ShortRegisterRequest;
 import godevenner.divexbackend.subscription.model.Subscription;
 import godevenner.divexbackend.subscription.model.SubscriptionType;
 import godevenner.divexbackend.user.model.User;
+import godevenner.divexbackend.user.service.UserService;
 import godevenner.divexbackend.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,7 +23,7 @@ import org.springframework.stereotype.Service;
 public class LoginServiceImpl implements LoginService {
 
     private final PasswordEncoder passwordEncoder;
-    private final UserServiceImpl userService;
+    private final UserService userService;
     private final AuthenticationManager authenticationManager;
 
 
