@@ -119,15 +119,20 @@ public class PopularityServiceImpl implements PopularityService {
 
         for (Stock stock : stocks) {
             for(TrackLog tracklog : trackLogRepository.findAllByStockId(stock.getId())) {
-                if (currentTime - period > tracklog.getTimestamp()) {
-                    stockPopularities.add(
-                            new StockPopularity(
-                                    stock.getId(),
-                                    stock.getName(),
-                                    stock.getTicker(),
-                                    trackLogRepository.countByStockId(stock.getId())
-                            )
+                if (currentTime - period < tracklog.getTimestamp()) {
+
+                    StockPopularity newEntry = new StockPopularity(
+                            stock.getId(),
+                            stock.getName(),
+                            stock.getTicker(),
+                            trackLogRepository.countByStockId(stock.getId())
                     );
+
+                    //to avoid duplicates
+                    if(!stockPopularities.contains(newEntry)){
+                        stockPopularities.add(newEntry);
+                    }
+
                 }
             }
         }
