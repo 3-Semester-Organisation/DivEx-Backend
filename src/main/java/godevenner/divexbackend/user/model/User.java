@@ -1,7 +1,6 @@
 package godevenner.divexbackend.user.model;
 
 import godevenner.divexbackend.subscription.model.Subscription;
-import godevenner.divexbackend.subscription.model.SubscriptionType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,8 +24,9 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(unique = true)
     private String username;
+    @Column(unique = true)
     private String email;
     private String password;
     private String firstName;
