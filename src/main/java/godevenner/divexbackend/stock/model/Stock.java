@@ -42,4 +42,5 @@ public class Stock {
     @JoinColumn(name = "stock_id")
     private List<HistoricalPricing> historicalPricings;
 
+
 }
