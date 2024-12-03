@@ -1,14 +1,12 @@
 package godevenner.divexbackend.login.service;
 
-import godevenner.divexbackend.config.JwtService;
 import godevenner.divexbackend.login.dto.AuthenticationResponse;
 import godevenner.divexbackend.login.dto.LoginRequest;
 import godevenner.divexbackend.login.dto.RegisterRequest;
 import godevenner.divexbackend.login.dto.ShortRegisterRequest;
-import godevenner.divexbackend.subscription.model.Subscription;
-import godevenner.divexbackend.subscription.model.repository.SubscriptionRepository;
+import godevenner.divexbackend.subscription.Subscription;
+import godevenner.divexbackend.subscription.repository.SubscriptionRepository;
 import godevenner.divexbackend.user.model.User;
-import godevenner.divexbackend.user.repository.UserRepository;
 import godevenner.divexbackend.user.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,10 +16,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Map;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
