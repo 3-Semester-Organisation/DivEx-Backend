@@ -9,6 +9,7 @@ import godevenner.divexbackend.subscription.model.Subscription;
 import godevenner.divexbackend.subscription.model.repository.SubscriptionRepository;
 import godevenner.divexbackend.user.model.User;
 import godevenner.divexbackend.user.repository.UserRepository;
+import godevenner.divexbackend.user.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,13 +30,12 @@ class LoginServiceImplTest {
     @Mock
     PasswordEncoder passwordEncoder;
     @Mock
-    UserRepository userRepository;
+    UserService userService;
     @Mock
     AuthenticationManager authenticationManager;
     @Mock
-    JwtService jwtService;
-    @Mock
     SubscriptionRepository subscriptionRepository;
+
     @InjectMocks
     LoginServiceImpl loginServiceImpl;
 
@@ -47,8 +47,9 @@ class LoginServiceImplTest {
     @Test
     void testRegister() {
         when(passwordEncoder.encode(any(CharSequence.class))).thenReturn("encodeResponse");
-        when(userRepository.save(any(User.class))).thenReturn(new User());
-        when(jwtService.generateToken(any(Map.class), any(User.class))).thenReturn("generateTokenResponse");
+        when(userService.save(any(User.class))).thenReturn(new User());
+        //when(jwtService.generateToken(any(Map.class), any(User.class))).thenReturn("generateTokenResponse");
+        when(userService.generatedAuthenticationResponse(any(User.class))).thenReturn(new AuthenticationResponse("generateTokenResponse"));
         when(subscriptionRepository.save(any(Subscription.class))).thenReturn(new Subscription());
 
         AuthenticationResponse result = loginServiceImpl.register(new RegisterRequest("subscriptionType", "username", "email", "password", "firstName", "lastName", "phone", "address", "city"));
@@ -58,8 +59,9 @@ class LoginServiceImplTest {
     @Test
     void testShortRegister() {
         when(passwordEncoder.encode(any(CharSequence.class))).thenReturn("encodeResponse");
-        when(userRepository.save(any(User.class))).thenReturn(new User());
-        when(jwtService.generateToken(any(Map.class), any(UserDetails.class))).thenReturn("generateTokenResponse");
+        when(userService.save(any(User.class))).thenReturn(new User());
+        //when(jwtService.generateToken(any(Map.class), any(UserDetails.class))).thenReturn("generateTokenResponse");
+        when(userService.generatedAuthenticationResponse(any(User.class))).thenReturn(new AuthenticationResponse("generateTokenResponse"));
         when(subscriptionRepository.save(any(Subscription.class))).thenReturn(new Subscription());
 
         AuthenticationResponse result = loginServiceImpl.shortRegister(new ShortRegisterRequest("username", "email", "password"));
@@ -72,9 +74,11 @@ class LoginServiceImplTest {
         User mockUser = new User();
         mockUser.setSubscription(mockSubscription);
 
-        when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(mockUser));
+        when(userService.findByUsername(anyString())).thenReturn(Optional.of(mockUser));
         when(authenticationManager.authenticate(any(Authentication.class))).thenReturn(null);
-        when(jwtService.generateToken(any(Map.class), any(User.class))).thenReturn("generateTokenResponse");
+        //when(jwtService.generateToken(any(Map.class), any(User.class))).thenReturn("generateTokenResponse");
+        when(userService.generatedAuthenticationResponse(any(User.class))).thenReturn(new AuthenticationResponse("generateTokenResponse"));
+
 
         AuthenticationResponse result = loginServiceImpl.login(new LoginRequest("username", "password"));
         Assertions.assertEquals(new AuthenticationResponse("generateTokenResponse"), result);
