@@ -12,4 +12,6 @@ public interface StockRepository extends JpaRepository<Stock, Integer> {
     Optional<Stock> findByTicker(String ticker);
 
     Page<Stock> findByTickerContainingIgnoreCase(String ticker, Pageable pageable);
+
+    Page<Stock> findAllByDividend_ExDividendDate(Long date, Pageable pageable);
 }
