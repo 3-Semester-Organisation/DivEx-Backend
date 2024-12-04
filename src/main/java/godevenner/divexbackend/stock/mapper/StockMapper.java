@@ -8,10 +8,9 @@ import godevenner.divexbackend.stock.model.Stock;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
-public class StockResponseMapper {
+public class StockMapper {
 
     public StockResponse toStockResponse(Stock stock) {
         Dividend dividend = stock.getDividend();

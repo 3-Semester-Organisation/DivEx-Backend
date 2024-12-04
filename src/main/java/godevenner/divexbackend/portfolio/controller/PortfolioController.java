@@ -2,12 +2,16 @@ package godevenner.divexbackend.portfolio.controller;
 
 import godevenner.divexbackend.config.JwtService;
 import godevenner.divexbackend.portfolio.dto.CreatePortfolioRequest;
+import godevenner.divexbackend.portfolio.dto.PortfolioEntryRequest;
+import godevenner.divexbackend.portfolio.dto.PortfolioEntryResponse;
+import godevenner.divexbackend.portfolio.dto.PortfolioResponse;
 import godevenner.divexbackend.portfolio.model.Portfolio;
 import godevenner.divexbackend.portfolio.model.PortfolioEntry;
 import godevenner.divexbackend.portfolio.service.PortfolioEntryService;
 import godevenner.divexbackend.portfolio.service.PortfolioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,11 +26,11 @@ public class PortfolioController {
     private final JwtService jwtService;
 
     @GetMapping("/portfolio")
-    public ResponseEntity<List<Portfolio>> getPortfolios(@RequestHeader("Authorization") String authorizationHeader) {
+    public ResponseEntity<List<PortfolioResponse>> getPortfolios(@RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.replace("Bearer ", "");
         String userId = jwtService.extractUserId(token);
-        List<Portfolio> portfolio = portfolioService.getPortfolios(Long.parseLong(userId));
-        return ResponseEntity.ok(portfolio);
+        List<PortfolioResponse> response = portfolioService.getPortfolios(Long.parseLong(userId));
+        return ResponseEntity.ok(response);
     }
 
     // this shit do be bussin respectfully
@@ -40,14 +44,12 @@ public class PortfolioController {
 
 
 
-
-
-
-
+    @PreAuthorize("hasAuthority('PREMIUM') || hasAuthority('FREE')")
     @PostMapping("/portfolioentry")
-    public ResponseEntity<PortfolioEntry> createPortfolioEntry(@RequestBody PortfolioEntry portfolioEntry) {
-        PortfolioEntry createdPortfolioEntry = portfolioEntryService.createPortfolioEntry(portfolioEntry);
-        return ResponseEntity.ok(createdPortfolioEntry);
+    public ResponseEntity<PortfolioEntryResponse> createPortfolioEntry(@RequestBody PortfolioEntryRequest request) {
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + request);
+        PortfolioEntryResponse response = portfolioEntryService.createPortfolioEntry(request);
+        return ResponseEntity.ok(response);
     }
 
 }

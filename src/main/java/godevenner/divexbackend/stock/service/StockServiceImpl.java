@@ -2,7 +2,7 @@ package godevenner.divexbackend.stock.service;
 
 import godevenner.divexbackend.exception.InvalidTickerException;
 import godevenner.divexbackend.stock.dto.StockResponse;
-import godevenner.divexbackend.stock.mapper.StockResponseMapper;
+import godevenner.divexbackend.stock.mapper.StockMapper;
 import godevenner.divexbackend.stock.model.Stock;
 import godevenner.divexbackend.stock.repository.StockRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,26 +17,26 @@ import java.util.List;
 public class StockServiceImpl implements StockService {
 
     private final StockRepository stockRepository;
-    private final StockResponseMapper stockResponseMapper;
+    private final StockMapper stockMapper;
 
 
     @Override
     public List<StockResponse> getStocksByNameOrTicker(String searchTerm) {
         return stockRepository.findByNameOrTicker(searchTerm).stream()
-                .map(stockResponseMapper::toStockResponse)
+                .map(stockMapper::toStockResponse)
                 .toList();
     }
 
     @Override
     public Page<StockResponse> getAllStocks(Pageable pageable) {
-        return stockRepository.findAll(pageable).map(stockResponseMapper::toStockResponse);
+        return stockRepository.findAll(pageable).map(stockMapper::toStockResponse);
     }
 
 
     @Override
     public StockResponse getStockByTicker(String ticker) {
         Stock stock = stockRepository.findByTicker(ticker).orElseThrow( () -> new InvalidTickerException("Invalid ticker: " + ticker));
-        StockResponse response = stockResponseMapper.toStockResponse(stock);
+        StockResponse response = stockMapper.toStockResponse(stock);
         return response;
     }
 

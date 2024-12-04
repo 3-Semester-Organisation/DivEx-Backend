@@ -27,14 +27,14 @@ public class StockController {
 
 
     @GetMapping("/stock/{ticker}")
-    public ResponseEntity<StockResponse> getStock(@PathVariable String ticker) {
+    public ResponseEntity<StockResponse> getStockByTicker(@PathVariable String ticker) {
         StockResponse stockResponse = stockService.getStockByTicker(ticker);
         return ResponseEntity.ok(stockResponse);
     }
 
 
     @GetMapping("/stocks/{searchTerm}")
-    public ResponseEntity<List<StockResponse>> get(@PathVariable String searchTerm) {
+    public ResponseEntity<List<StockResponse>> getStockBySearchTerm(@PathVariable String searchTerm) {
         List<StockResponse> stockResponse = stockService.getStocksByNameOrTicker(searchTerm);
         return ResponseEntity.ok(stockResponse);
     }
