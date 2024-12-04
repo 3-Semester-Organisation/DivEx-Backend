@@ -32,13 +32,13 @@ class StockControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray())
-                .andExpect(jsonPath("$.content[0].ticker").value("MAERSK-A.CO"))
-                .andExpect(jsonPath("$.content[0].name").value("A.P. Møller - Mærsk A A/S"))
-                .andExpect(jsonPath("$.content[0].country").value("Denmark"))
-                .andExpect(jsonPath("$.content[0].exchange").value("CPH"))
-                .andExpect(jsonPath("$.content[0].currency").value("DKK"))
-                .andExpect(jsonPath("$.content[0].industry").value("Marine Shipping"))
-                .andExpect(jsonPath("$.content[0].sector").value("Industrials"));
+                .andExpect(jsonPath("$.content[0].ticker").value("SHB-A.ST"))
+                .andExpect(jsonPath("$.content[0].name").value("Svenska Handelsbanken ser. A"))
+                .andExpect(jsonPath("$.content[0].country").value("Sweden"))
+                .andExpect(jsonPath("$.content[0].exchange").value("STO"))
+                .andExpect(jsonPath("$.content[0].currency").value("SEK"))
+                .andExpect(jsonPath("$.content[0].industry").value("Banks - Diversified"))
+                .andExpect(jsonPath("$.content[0].sector").value("Financial Services"));
     }
 
     @Test
