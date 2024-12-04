@@ -57,5 +57,4 @@ public class PortfolioController {
         PortfolioEntry createdPortfolioEntry = portfolioEntryService.createPortfolioEntry(portfolioEntry);
         return ResponseEntity.ok(createdPortfolioEntry);
     }
-
 }
