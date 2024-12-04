@@ -125,7 +125,9 @@ public class PopularityServiceImpl implements PopularityService {
                             stock.getId(),
                             stock.getName(),
                             stock.getTicker(),
-                            trackLogRepository.countByStockId(stock.getId())
+                            //our fetch makes two trackLogs since it fetches twice
+                            //dividing by two is a VERY hack fix, but it works
+                            trackLogRepository.countByStockId(stock.getId()) / 2
                     );
 
                     //to avoid duplicates
