@@ -1,5 +1,6 @@
 package godevenner.divexbackend.portfolio.service;
 
+import godevenner.divexbackend.portfolio.dto.UpdatePortfolioRequest;
 import godevenner.divexbackend.portfolio.model.Portfolio;
 import godevenner.divexbackend.portfolio.repository.PortfolioRepository;
 import godevenner.divexbackend.user.model.User;
@@ -27,9 +28,17 @@ public class PortfolioServiceImpl implements PortfolioService {
         if (user.isEmpty()) {
             throw new RuntimeException("User not found");
         }
-        System.out.println("portfolioname: " + portfolioName);
         portfolio.setName(portfolioName);
         portfolio.setUser(user.get());
+
+        return portfolioRepository.save(portfolio);
+    }
+
+    public Portfolio updatePortfolio(UpdatePortfolioRequest request) {
+        Portfolio portfolio = portfolioRepository.findById(request.portfolioId());
+
+        System.out.println("portfolioname: " + request.portfolioName());
+        portfolio.setName(request.portfolioName());
 
         return portfolioRepository.save(portfolio);
     }
