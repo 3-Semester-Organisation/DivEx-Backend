@@ -17,7 +17,7 @@ public class HistoricalPricing {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private double openingPrice;
     private long openingDate;

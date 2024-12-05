@@ -20,7 +20,7 @@ public class Dividend {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private double dividendRate;
     private double dividendYield;
     private double dividendRatio;

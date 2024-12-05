@@ -14,7 +14,7 @@ public class HistoricalDividend {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private double dividend;
     private long exDividendDate;

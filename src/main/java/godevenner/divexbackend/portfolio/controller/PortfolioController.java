@@ -26,8 +26,8 @@ public class PortfolioController {
     @GetMapping("/portfolio")
     public ResponseEntity<List<Portfolio>> getPortfolios(@RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.replace("Bearer ", "");
-        String userId = jwtService.extractUserId(token);
-        List<Portfolio> portfolio = portfolioService.getPortfolios(Long.parseLong(userId));
+        Long userId = Long.parseLong(jwtService.extractUserId(token));
+        List<Portfolio> portfolio = portfolioService.getPortfolios(userId);
         return ResponseEntity.ok(portfolio);
     }
 
@@ -35,8 +35,8 @@ public class PortfolioController {
     @PostMapping("/portfolio")
     public ResponseEntity<Portfolio> createPortfolio(@RequestBody CreatePortfolioRequest createPortfolioRequest, @RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.replace("Bearer ", "");
-        String userId = jwtService.extractUserId(token);
-        Portfolio portfolio = portfolioService.createPortfolio(createPortfolioRequest.portfolioName(), Long.parseLong(userId));
+        Long userId = Long.parseLong(jwtService.extractUserId(token));
+        Portfolio portfolio = portfolioService.createPortfolio(createPortfolioRequest.portfolioName(), userId);
         return ResponseEntity.ok(portfolio);
     }
 
@@ -47,7 +47,7 @@ public class PortfolioController {
     }
 
     @GetMapping("/portfolioentries")
-    public ResponseEntity<List<PortfolioEntry>> getPortfolioEntries(@RequestBody Integer userId) {
+    public ResponseEntity<List<PortfolioEntry>> getPortfolioEntries(@RequestBody Long userId) {
         List<PortfolioEntry> portfolioentries = portfolioEntryService.getPortfolioEntries(userId);
         return ResponseEntity.ok(portfolioentries);
     }
