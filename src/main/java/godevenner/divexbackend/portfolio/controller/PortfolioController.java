@@ -50,11 +50,6 @@ public class PortfolioController {
         return ResponseEntity.ok(portfolio);
     }
 
-    @GetMapping("/portfolioentries")
-    public ResponseEntity<List<PortfolioEntry>> getPortfolioEntries(@RequestBody Integer userId) {
-        List<PortfolioEntry> portfolioentries = portfolioEntryService.getPortfolioEntries(userId);
-        return ResponseEntity.ok(portfolioentries);
-    }
 
 
     @PreAuthorize("hasAuthority('PREMIUM') || hasAuthority('FREE')")
