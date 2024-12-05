@@ -5,7 +5,6 @@ import godevenner.divexbackend.stock.dto.DividendDateResponse;
 import godevenner.divexbackend.stock.dto.StockResponse;
 import godevenner.divexbackend.stock.mapper.StockMapper;
 import godevenner.divexbackend.stock.mapper.DividendDateResponseMapper;
-import godevenner.divexbackend.stock.mapper.StockResponseMapper;
 import godevenner.divexbackend.stock.model.Stock;
 import godevenner.divexbackend.stock.repository.DividendRepository;
 import godevenner.divexbackend.stock.repository.StockRepository;
@@ -22,7 +21,6 @@ public class StockServiceImpl implements StockService {
 
     private final StockRepository stockRepository;
     private final StockMapper stockMapper;
-    private final StockResponseMapper stockResponseMapper;
     private final DividendRepository dividendRepository;
     private final DividendDateResponseMapper dividendDateResponseMapper;
 
@@ -54,7 +52,7 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public Page<StockResponse> getAllStocksByDate(Long date, Pageable pageable) {
-        return stockRepository.findAllByDividend_ExDividendDate(date, pageable).map(stockResponseMapper::toStockResponse);
+        return stockRepository.findAllByDividend_ExDividendDate(date, pageable).map(stockMapper::toStockResponse);
     }
 
 
