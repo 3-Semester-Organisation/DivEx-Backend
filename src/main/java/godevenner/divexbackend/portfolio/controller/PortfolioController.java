@@ -25,7 +25,6 @@ public class PortfolioController {
     private final PortfolioEntryService portfolioEntryService;
     private final UserService userService;
     private final JwtService jwtService;
-    private final PortfolioEntryRepository portfolioEntryRepository;
 
     @GetMapping("/portfolio")
     public ResponseEntity<List<Portfolio>> getPortfolios(@RequestHeader("Authorization") String authorizationHeader) {

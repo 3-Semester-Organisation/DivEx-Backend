@@ -2,10 +2,8 @@ package godevenner.divexbackend.user.service;
 
 import godevenner.divexbackend.config.JwtService;
 import godevenner.divexbackend.login.dto.AuthenticationResponse;
-import godevenner.divexbackend.portfolio.model.Portfolio;
 import godevenner.divexbackend.portfolio.repository.PortfolioEntryRepository;
 import godevenner.divexbackend.portfolio.repository.PortfolioRepository;
-import godevenner.divexbackend.portfolio.service.PortfolioService;
 import godevenner.divexbackend.subscription.Subscription;
 import godevenner.divexbackend.subscription.SubscriptionType;
 import godevenner.divexbackend.subscription.repository.SubscriptionRepository;

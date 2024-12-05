@@ -1,7 +1,6 @@
 package godevenner.divexbackend.user.service;
 
 import godevenner.divexbackend.login.dto.AuthenticationResponse;
-import godevenner.divexbackend.user.dto.ChangeSubscriptionRequest;
 import godevenner.divexbackend.user.model.User;
 
 import java.util.Optional;
