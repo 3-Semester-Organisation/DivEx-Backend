@@ -23,7 +23,7 @@ public class PopularityServiceImpl implements PopularityService {
 
 
     @Override
-    public StockPopularity getPopularityByStockId(int stockId) {
+    public StockPopularity getPopularityByStockId(long stockId) {
 
         Stock stock = stockRepository.findById(stockId).orElseThrow(
                 () -> new InvalidStockException(

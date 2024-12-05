@@ -17,7 +17,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
@@ -38,10 +37,10 @@ class PortfolioEntryServiceImplTest {
     void testCreatePortfolioEntry() {
         when(portfolioEntryRepository.save(any(PortfolioEntry.class))).thenReturn(new PortfolioEntry(Long.valueOf(1), 0d, 0, 0L, null, null));
         when(portfolioEntryMapper.toPortfolioEntry(any(PortfolioEntryRequest.class))).thenReturn(new PortfolioEntry(Long.valueOf(1), 0d, 0, 0L, null, null));
-        when(portfolioEntryMapper.toPortfolioEntryResponse(any(PortfolioEntry.class))).thenReturn(new PortfolioEntryResponse(new StockResponse("ticker", "name", "country", "exchange", Currency.DKK, "industry", "sector", List.of(new HistoricalPricingResponse(0d, 0L, 0d, 0L)), 0d, 0d, 0d, 0d, 0L, List.of(new HistoricalDividendsResponse(0d, 0L))), 0d, 0, 0L));
+        when(portfolioEntryMapper.toPortfolioEntryResponse(any(PortfolioEntry.class))).thenReturn(new PortfolioEntryResponse(new StockResponse(0L, "ticker", "name", "country", "exchange", Currency.DKK, "industry", "sector", List.of(new HistoricalPricingResponse(0d, 0L, 0d, 0L)), 0d, 0d, 0d, 0d, 0L, List.of(new HistoricalDividendsResponse(0d, 0L))), 0d, 0, 0L));
 
         PortfolioEntryResponse result = portfolioEntryServiceImpl.createPortfolioEntry(new PortfolioEntryRequest("ticker", 0d, 0, 0L));
-        Assertions.assertEquals(new PortfolioEntryResponse(new StockResponse("ticker", "name", "country", "exchange", Currency.DKK, "industry", "sector", List.of(new HistoricalPricingResponse(0d, 0L, 0d, 0L)), 0d, 0d, 0d, 0d, 0L, List.of(new HistoricalDividendsResponse(0d, 0L))), 0d, 0, 0L), result);
+        Assertions.assertEquals(new PortfolioEntryResponse(new StockResponse(0L, "ticker", "name", "country", "exchange", Currency.DKK, "industry", "sector", List.of(new HistoricalPricingResponse(0d, 0L, 0d, 0L)), 0d, 0d, 0d, 0d, 0L, List.of(new HistoricalDividendsResponse(0d, 0L))), 0d, 0, 0L), result);
     }
 }
 

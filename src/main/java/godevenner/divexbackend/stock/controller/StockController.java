@@ -41,13 +41,8 @@ public class StockController {
     }
 
     @GetMapping("/stock/{ticker}")
-    public ResponseEntity<StockResponse> getStockByTicker(@PathVariable String ticker) {
-        StockResponse stockResponse = stockService.getStockByTicker(ticker);
-        return ResponseEntity.ok(stockResponse);
-    }
-    @GetMapping("/stock/{ticker}")
     public ResponseEntity<StockResponse> getStock(@PathVariable String ticker, HttpServletRequest request) {
-        StockResponse stockResponse = stockService.getStock(ticker);
+        StockResponse stockResponse = stockService.getStockByTicker(ticker);
         String ipAddress = request.getRemoteAddr();
         trackerService.track(stockResponse.stockId(),ipAddress);
         return ResponseEntity.ok(stockResponse);

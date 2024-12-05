@@ -65,6 +65,7 @@ class StockServiceImplTest {
 
         // Apple StockResponse
         StockResponse appleStockResponse = new StockResponse(
+                1,
                 "AAPL",
                 "Apple Inc.",
                 "USA",
@@ -83,6 +84,7 @@ class StockServiceImplTest {
 
         // Google StockResponse
         StockResponse googleStockResponse = new StockResponse(
+                2,
                 "GOOGL",
                 "Alphabet Inc.",
                 "USA",
@@ -123,6 +125,7 @@ class StockServiceImplTest {
 
         // Apple StockResponse
         StockResponse appleStockResponse = new StockResponse(
+                1,
                 "AAPL",
                 "Apple Inc.",
                 "USA",
