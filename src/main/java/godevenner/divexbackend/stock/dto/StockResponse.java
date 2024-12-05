@@ -13,7 +13,7 @@ public record StockResponse(
         String industry,
         String sector,
 
-        List<HistoricalPricingResponse> historicalPricingResponseList,
+        List<HistoricalPricingResponse> historicalPricing,
 
         double dividendRate,
         double dividendYield,
@@ -21,6 +21,6 @@ public record StockResponse(
         double fiveYearAvgDividendYield,
         long exDividendDate,
 
-        List<HistoricalDividendsResponse> historicalDividendsResponseList
+        List<HistoricalDividendsResponse> historicalDividends
 ) {
 }
