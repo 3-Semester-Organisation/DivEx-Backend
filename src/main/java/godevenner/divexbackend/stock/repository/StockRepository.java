@@ -15,4 +15,7 @@ public interface StockRepository extends JpaRepository<Stock, Integer> {
 
     @Query("SELECT s FROM Stock s WHERE LOWER(s.name) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR LOWER(s.ticker) LIKE LOWER(CONCAT('%', :searchTerm, '%'))")
     List<Stock> findByNameOrTicker(String searchTerm);
+    Page<Stock> findByTickerContainingIgnoreCase(String ticker, Pageable pageable);
+
+    Page<Stock> findAllByDividend_ExDividendDate(Long date, Pageable pageable);
 }

@@ -5,11 +5,13 @@ import godevenner.divexbackend.portfolio.dto.CreatePortfolioRequest;
 import godevenner.divexbackend.portfolio.dto.PortfolioEntryRequest;
 import godevenner.divexbackend.portfolio.dto.PortfolioEntryResponse;
 import godevenner.divexbackend.portfolio.dto.PortfolioResponse;
+import godevenner.divexbackend.portfolio.dto.UpdatePortfolioRequest;
 import godevenner.divexbackend.portfolio.model.Portfolio;
 import godevenner.divexbackend.portfolio.model.PortfolioEntry;
 import godevenner.divexbackend.portfolio.service.PortfolioEntryService;
 import godevenner.divexbackend.portfolio.service.PortfolioService;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.sql.Update;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +44,17 @@ public class PortfolioController {
         return ResponseEntity.ok(portfolio);
     }
 
+    @PutMapping("/portfolio")
+    public ResponseEntity<Portfolio> updatePortfolio(@RequestBody UpdatePortfolioRequest request) {
+        Portfolio portfolio = portfolioService.updatePortfolio(request);
+        return ResponseEntity.ok(portfolio);
+    }
+
+    @GetMapping("/portfolioentries")
+    public ResponseEntity<List<PortfolioEntry>> getPortfolioEntries(@RequestBody Integer userId) {
+        List<PortfolioEntry> portfolioentries = portfolioEntryService.getPortfolioEntries(userId);
+        return ResponseEntity.ok(portfolioentries);
+    }
 
 
     @PreAuthorize("hasAuthority('PREMIUM') || hasAuthority('FREE')")

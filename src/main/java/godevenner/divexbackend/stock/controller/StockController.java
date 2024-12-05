@@ -1,5 +1,6 @@
 package godevenner.divexbackend.stock.controller;
 
+import godevenner.divexbackend.stock.dto.DividendDateResponse;
 import godevenner.divexbackend.stock.dto.StockResponse;
 import godevenner.divexbackend.stock.service.StockService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,12 @@ public class StockController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/stocksByDate")
+    public ResponseEntity<Page<StockResponse>> getAllStocksByDate(@RequestParam Long date, Pageable pageable) {
+        System.out.println("date: " + date);
+        Page<StockResponse> response = stockService.getAllStocksByDate(date, pageable);
+        return ResponseEntity.ok(response);
+    }
 
     @GetMapping("/stock/{ticker}")
     public ResponseEntity<StockResponse> getStockByTicker(@PathVariable String ticker) {
@@ -37,5 +44,11 @@ public class StockController {
     public ResponseEntity<List<StockResponse>> getStockBySearchTerm(@PathVariable String searchTerm) {
         List<StockResponse> stockResponse = stockService.getStocksByNameOrTicker(searchTerm);
         return ResponseEntity.ok(stockResponse);
+    }
+
+    @GetMapping("/stocks/dividendDates")
+    public ResponseEntity<List<DividendDateResponse>> getDividendDates() {
+        List<DividendDateResponse> response = stockService.getDividendDates();
+        return ResponseEntity.ok(response);
     }
 }
