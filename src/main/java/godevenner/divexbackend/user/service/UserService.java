@@ -20,6 +20,7 @@ public interface UserService {
 
     boolean maxNumberOfPortfoliosPrUserReached(Long userId);
 
+    boolean maxNumberOfPortfolioEntriesPrPortfolioReached(Long portfolioId, Long userId);
 
     AuthenticationResponse generatedAuthenticationResponse(User user);
 }

@@ -3,6 +3,7 @@ package godevenner.divexbackend.user.service;
 import godevenner.divexbackend.config.JwtService;
 import godevenner.divexbackend.login.dto.AuthenticationResponse;
 import godevenner.divexbackend.portfolio.model.Portfolio;
+import godevenner.divexbackend.portfolio.repository.PortfolioEntryRepository;
 import godevenner.divexbackend.portfolio.repository.PortfolioRepository;
 import godevenner.divexbackend.portfolio.service.PortfolioService;
 import godevenner.divexbackend.subscription.Subscription;
@@ -25,12 +26,14 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PortfolioRepository portfolioRepository;
+    private final PortfolioEntryRepository portfolioEntryRepository;
     private final SubscriptionRepository subscriptionRepository;
     private final JwtService jwtService;
 
     @Value("${max.number.of.portfolios.free}")
     private int maxNumberOfPortfoliosFree;
-
+    @Value("${max.number.of.portfolioentries.free}")
+    private int maxNumberOfPortfolioEntriesFree;
 
 
     @Override
@@ -66,6 +69,16 @@ public class UserServiceImpl implements UserService {
 
         int numberOfPortfolios = portfolioRepository.findByUserId(userId).size();
         return numberOfPortfolios >= maxNumberOfPortfoliosFree; // hvis numberOfPortfolios er over eller lig maxNumberOfPortfoliosFree - return true
+    }
+
+    @Override
+    public boolean maxNumberOfPortfolioEntriesPrPortfolioReached(Long portfolioId, Long userId) {
+
+        Subscription subscription = subscriptionRepository.findById(userId).orElseThrow();
+        if (subscription.getSubscriptionType() == SubscriptionType.PREMIUM) return false;
+
+        int numberOfPortfolioEntries = portfolioEntryRepository.findByPortfolioId(portfolioId).size();
+        return numberOfPortfolioEntries >= maxNumberOfPortfolioEntriesFree; // hvis numberOfPortfolioEntries er over eller lig maxNumberOfPortfolioEntriesFree - return true
     }
 
 
