@@ -46,7 +46,7 @@ public class PortfolioServiceImpl implements PortfolioService {
     }
 
     public Portfolio updatePortfolio(UpdatePortfolioRequest request) {
-        Portfolio portfolio = portfolioRepository.findById(request.portfolioId());
+        Portfolio portfolio = portfolioRepository.findById(request.portfolioId()).orElseThrow( () -> new RuntimeException("Portfolio not found"));
 
         System.out.println("portfolioname: " + request.portfolioName());
         portfolio.setName(request.portfolioName());
