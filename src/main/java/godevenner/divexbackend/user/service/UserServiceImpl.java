@@ -2,12 +2,19 @@ package godevenner.divexbackend.user.service;
 
 import godevenner.divexbackend.config.JwtService;
 import godevenner.divexbackend.login.dto.AuthenticationResponse;
+import godevenner.divexbackend.portfolio.repository.PortfolioEntryRepository;
+import godevenner.divexbackend.portfolio.repository.PortfolioRepository;
+import godevenner.divexbackend.subscription.Subscription;
+import godevenner.divexbackend.subscription.SubscriptionType;
+import godevenner.divexbackend.subscription.repository.SubscriptionRepository;
 import godevenner.divexbackend.user.model.User;
 import godevenner.divexbackend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+
 import java.util.Map;
 import java.util.Optional;
 
@@ -16,7 +23,15 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PortfolioRepository portfolioRepository;
+    private final PortfolioEntryRepository portfolioEntryRepository;
+    private final SubscriptionRepository subscriptionRepository;
     private final JwtService jwtService;
+
+    @Value("${max.number.of.portfolios.free}")
+    private int maxNumberOfPortfoliosFree;
+    @Value("${max.number.of.portfolioentries.free}")
+    private int maxNumberOfPortfolioEntriesFree;
 
 
     @Override
@@ -44,6 +59,25 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(newUser);
     }
 
+    @Override
+    public boolean maxNumberOfPortfoliosPrUserReached(Long userId) {
+
+        Subscription subscription = subscriptionRepository.findById(userId).orElseThrow();
+        if (subscription.getSubscriptionType() == SubscriptionType.PREMIUM) return false;
+
+        int numberOfPortfolios = portfolioRepository.findByUserId(userId).size();
+        return numberOfPortfolios >= maxNumberOfPortfoliosFree; // hvis numberOfPortfolios er over eller lig maxNumberOfPortfoliosFree - return true
+    }
+
+    @Override
+    public boolean maxNumberOfPortfolioEntriesPrPortfolioReached(Long portfolioId, Long userId) {
+
+        Subscription subscription = subscriptionRepository.findById(userId).orElseThrow();
+        if (subscription.getSubscriptionType() == SubscriptionType.PREMIUM) return false;
+
+        int numberOfPortfolioEntries = portfolioEntryRepository.findByPortfolioId(portfolioId).size();
+        return numberOfPortfolioEntries >= maxNumberOfPortfolioEntriesFree; // hvis numberOfPortfolioEntries er over eller lig maxNumberOfPortfolioEntriesFree - return true
+    }
 
 
     @Override
