@@ -36,7 +36,7 @@ class PortfolioEntryServiceImplTest {
 
     @Test
     void testGetPortfolioEntries() {
-        when(portfolioEntryRepository.findByPortfolioId(anyInt())).thenReturn(List.of(new PortfolioEntry(1L,
+        when(portfolioEntryRepository.findByPortfolioId(anyLong())).thenReturn(List.of(new PortfolioEntry(1L,
                 new Portfolio(0L, "portfolioName",
                         new User(1L, "username", "email", "password", "firstName", "lastName", "phone", "address", "city",
                                 new Subscription(1L, true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.NOVEMBER, 30, 23, 17, 15), LocalDateTime.of(2024, Month.NOVEMBER, 30, 23, 17, 15)))),
@@ -45,7 +45,7 @@ class PortfolioEntryServiceImplTest {
                         List.of(new HistoricalDividend(0L, 0d, 0L)),
                         List.of(new HistoricalPricing(0L, 0d, 0L, 0d, 0L))))));
 
-        List<PortfolioEntry> result = portfolioEntryServiceImpl.getPortfolioEntries(0);
+        List<PortfolioEntry> result = portfolioEntryServiceImpl.getPortfolioEntries(0L);
         Assertions.assertEquals(List.of(new PortfolioEntry(1L,
                 new Portfolio(0L, "portfolioName", new User(1L, "username", "email", "password", "firstName", "lastName", "phone", "address", "city",
                         new Subscription(1L, true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.NOVEMBER, 30, 23, 17, 15), LocalDateTime.of(2024, Month.NOVEMBER, 30, 23, 17, 15)))),
