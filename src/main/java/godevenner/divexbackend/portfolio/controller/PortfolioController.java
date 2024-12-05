@@ -8,7 +8,6 @@ import godevenner.divexbackend.portfolio.model.PortfolioEntry;
 import godevenner.divexbackend.portfolio.service.PortfolioEntryService;
 import godevenner.divexbackend.portfolio.service.PortfolioService;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.sql.Update;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

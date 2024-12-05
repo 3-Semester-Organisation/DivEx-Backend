@@ -3,7 +3,7 @@ package godevenner.divexbackend.stock.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+
 
 @Data
 @Entity
