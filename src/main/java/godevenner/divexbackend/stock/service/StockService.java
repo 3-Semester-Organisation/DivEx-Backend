@@ -2,7 +2,6 @@ package godevenner.divexbackend.stock.service;
 
 import godevenner.divexbackend.stock.dto.DividendDateResponse;
 import godevenner.divexbackend.stock.dto.StockResponse;
-import godevenner.divexbackend.stock.model.Stock;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
