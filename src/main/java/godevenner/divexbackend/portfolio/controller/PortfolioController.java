@@ -1,6 +1,7 @@
 package godevenner.divexbackend.portfolio.controller;
 
 import godevenner.divexbackend.config.JwtService;
+import godevenner.divexbackend.exception.MaximumPortfolioEntriesReachException;
 import godevenner.divexbackend.portfolio.dto.CreatePortfolioRequest;
 import godevenner.divexbackend.portfolio.dto.PortfolioEntryRequest;
 import godevenner.divexbackend.portfolio.dto.PortfolioEntryResponse;
@@ -63,23 +64,16 @@ public class PortfolioController {
 
     @PreAuthorize("hasAuthority('PREMIUM') || hasAuthority('FREE')")
     @PostMapping("/portfolioentry")
-    public ResponseEntity<PortfolioEntryResponse> createPortfolioEntry(@RequestBody PortfolioEntryRequest request) {
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + request);
-        PortfolioEntryResponse response = portfolioEntryService.createPortfolioEntry(request);
-        return ResponseEntity.ok(response);
-    }
-
-    @PostMapping("/portfolioentry")
-    public ResponseEntity createPortfolioEntry(@RequestBody PortfolioEntry portfolioEntry, @RequestHeader("Authorization") String authorizationHeader) {
+    public ResponseEntity<PortfolioEntryResponse> createPortfolioEntry(@RequestBody PortfolioEntryRequest request, @RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.replace("Bearer ", "");
         Long userId = Long.parseLong(jwtService.extractUserId(token));
 
-        Long portfolioId = portfolioEntry.getPortfolio().getId();
+        Long portfolioId = request.portfolioId();
         if (userService.maxNumberOfPortfolioEntriesPrPortfolioReached(portfolioId, userId)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Cannot add entry. Free membership entry limit reached.");
+            throw new MaximumPortfolioEntriesReachException("Cannot add entry. Free membership entry limit reached.");
         }
 
-        PortfolioEntry createdPortfolioEntry = portfolioEntryService.createPortfolioEntry(portfolioEntry);
-        return ResponseEntity.ok(createdPortfolioEntry);
+        PortfolioEntryResponse response = portfolioEntryService.createPortfolioEntry(request);
+        return ResponseEntity.ok(response);
     }
 }
