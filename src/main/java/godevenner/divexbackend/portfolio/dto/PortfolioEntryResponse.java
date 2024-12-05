@@ -4,7 +4,7 @@ import godevenner.divexbackend.stock.dto.StockResponse;
 
 public record PortfolioEntryResponse(
         StockResponse stock,
-        int stockPrice,
+        double stockPrice,
         int quantity,
         long entryDate
 ) {

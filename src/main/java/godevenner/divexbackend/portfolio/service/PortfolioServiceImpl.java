@@ -24,7 +24,6 @@ public class PortfolioServiceImpl implements PortfolioService {
     private final UserRepository userRepository;
 
     public List<PortfolioResponse> getPortfolios(Long userId) {
-        System.out.println(portfolioRepository.findByUserId(userId));
         List<Portfolio> portfolios = portfolioRepository.findByUserId(userId);
 
         List<PortfolioResponse> response = portfolios.stream()
@@ -47,8 +46,6 @@ public class PortfolioServiceImpl implements PortfolioService {
 
     public Portfolio updatePortfolio(UpdatePortfolioRequest request) {
         Portfolio portfolio = portfolioRepository.findById(request.portfolioId()).orElseThrow( () -> new RuntimeException("Portfolio not found"));
-
-        System.out.println("portfolioname: " + request.portfolioName());
         portfolio.setName(request.portfolioName());
 
         return portfolioRepository.save(portfolio);

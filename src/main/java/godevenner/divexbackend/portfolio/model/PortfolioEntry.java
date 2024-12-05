@@ -21,7 +21,7 @@ public class PortfolioEntry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int stockPrice;
+    private double stockPrice;
     private int quantity;
     private long entryDate;
 
