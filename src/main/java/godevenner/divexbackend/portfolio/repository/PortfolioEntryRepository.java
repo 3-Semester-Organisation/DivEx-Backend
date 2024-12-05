@@ -7,5 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PortfolioEntryRepository extends JpaRepository<PortfolioEntry, Integer> {
+public interface PortfolioEntryRepository extends JpaRepository<PortfolioEntry, Long> {
+
+    List<PortfolioEntry> findByPortfolioId(Long portfolioId);
 }

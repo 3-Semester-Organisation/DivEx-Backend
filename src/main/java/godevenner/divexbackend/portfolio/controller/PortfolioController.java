@@ -8,10 +8,13 @@ import godevenner.divexbackend.portfolio.dto.PortfolioResponse;
 import godevenner.divexbackend.portfolio.dto.UpdatePortfolioRequest;
 import godevenner.divexbackend.portfolio.model.Portfolio;
 import godevenner.divexbackend.portfolio.model.PortfolioEntry;
+import godevenner.divexbackend.portfolio.repository.PortfolioEntryRepository;
 import godevenner.divexbackend.portfolio.service.PortfolioEntryService;
 import godevenner.divexbackend.portfolio.service.PortfolioService;
+import godevenner.divexbackend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.sql.Update;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +28,7 @@ public class PortfolioController {
 
     private final PortfolioService portfolioService;
     private final PortfolioEntryService portfolioEntryService;
+    private final UserService userService;
     private final JwtService jwtService;
 
     @GetMapping("/portfolio")
@@ -37,10 +41,15 @@ public class PortfolioController {
 
     // this shit do be bussin respectfully
     @PostMapping("/portfolio")
-    public ResponseEntity<Portfolio> createPortfolio(@RequestBody CreatePortfolioRequest createPortfolioRequest, @RequestHeader("Authorization") String authorizationHeader) {
+    public ResponseEntity createPortfolio(@RequestBody CreatePortfolioRequest createPortfolioRequest, @RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.replace("Bearer ", "");
-        String userId = jwtService.extractUserId(token);
-        Portfolio portfolio = portfolioService.createPortfolio(createPortfolioRequest.portfolioName(), Long.parseLong(userId));
+        Long userId = Long.parseLong(jwtService.extractUserId(token));
+
+        if (userService.maxNumberOfPortfoliosPrUserReached(userId)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Cannot add portfolio. Free membership portfolio limit reached.");
+        }
+
+        Portfolio portfolio = portfolioService.createPortfolio(createPortfolioRequest.portfolioName(), userId);
         return ResponseEntity.ok(portfolio);
     }
 
@@ -60,4 +69,17 @@ public class PortfolioController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/portfolioentry")
+    public ResponseEntity createPortfolioEntry(@RequestBody PortfolioEntry portfolioEntry, @RequestHeader("Authorization") String authorizationHeader) {
+        String token = authorizationHeader.replace("Bearer ", "");
+        Long userId = Long.parseLong(jwtService.extractUserId(token));
+
+        Long portfolioId = portfolioEntry.getPortfolio().getId();
+        if (userService.maxNumberOfPortfolioEntriesPrPortfolioReached(portfolioId, userId)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Cannot add entry. Free membership entry limit reached.");
+        }
+
+        PortfolioEntry createdPortfolioEntry = portfolioEntryService.createPortfolioEntry(portfolioEntry);
+        return ResponseEntity.ok(createdPortfolioEntry);
+    }
 }

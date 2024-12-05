@@ -22,7 +22,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     private final UserService userService;
 
     @Override
-    public AuthenticationResponse changeSubscriptionById(long id, ChangeSubscriptionRequest changeSubscriptionRequest) {
+    public AuthenticationResponse changeSubscriptionById(Long id, ChangeSubscriptionRequest changeSubscriptionRequest) {
         SubscriptionType newSubscriptionType = changeSubscriptionRequest.newSubscriptionType();
 
 

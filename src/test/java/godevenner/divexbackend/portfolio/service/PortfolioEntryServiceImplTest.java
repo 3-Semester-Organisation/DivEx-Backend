@@ -34,6 +34,27 @@ class PortfolioEntryServiceImplTest {
     }
 
     @Test
+    void testGetPortfolioEntries() {
+        when(portfolioEntryRepository.findByPortfolioId(anyLong())).thenReturn(List.of(new PortfolioEntry(1L,
+                new Portfolio(0L, "portfolioName",
+                        new User(1L, "username", "email", "password", "firstName", "lastName", "phone", "address", "city",
+                                new Subscription(1L, true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.NOVEMBER, 30, 23, 17, 15), LocalDateTime.of(2024, Month.NOVEMBER, 30, 23, 17, 15)))),
+                new Stock(0L, "ticker", "portfolioName", "country", "exchange", Currency.DKK, "industry", "sector",
+                        new Dividend(0L, 0d, 0d, 0d, 0d, 0L),
+                        List.of(new HistoricalDividend(0L, 0d, 0L)),
+                        List.of(new HistoricalPricing(0L, 0d, 0L, 0d, 0L))))));
+
+        List<PortfolioEntry> result = portfolioEntryServiceImpl.getPortfolioEntries(0L);
+        Assertions.assertEquals(List.of(new PortfolioEntry(1L,
+                new Portfolio(0L, "portfolioName", new User(1L, "username", "email", "password", "firstName", "lastName", "phone", "address", "city",
+                        new Subscription(1L, true, SubscriptionType.PREMIUM, LocalDateTime.of(2024, Month.NOVEMBER, 30, 23, 17, 15), LocalDateTime.of(2024, Month.NOVEMBER, 30, 23, 17, 15)))),
+                new Stock(0L, "ticker", "portfolioName", "country", "exchange", Currency.DKK, "industry", "sector",
+                        new Dividend(0L, 0d, 0d, 0d, 0d, 0L),
+                        List.of(new HistoricalDividend(0L, 0d, 0L)),
+                        List.of(new HistoricalPricing(0L, 0d, 0L, 0d, 0L))))), result);
+    }
+
+    @Test
     void testCreatePortfolioEntry() {
         when(portfolioEntryRepository.save(any(PortfolioEntry.class))).thenReturn(new PortfolioEntry(Long.valueOf(1), 0, 0, 0L, null));
         when(portfolioEntryMapper.toPortfolioEntry(any(PortfolioEntryRequest.class))).thenReturn(new PortfolioEntry(Long.valueOf(1), 0, 0, 0L, null));

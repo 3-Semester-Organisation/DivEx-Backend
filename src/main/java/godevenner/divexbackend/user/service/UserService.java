@@ -1,7 +1,6 @@
 package godevenner.divexbackend.user.service;
 
 import godevenner.divexbackend.login.dto.AuthenticationResponse;
-import godevenner.divexbackend.user.dto.ChangeSubscriptionRequest;
 import godevenner.divexbackend.user.model.User;
 
 import java.util.Optional;
@@ -17,6 +16,10 @@ public interface UserService {
     boolean existsByEmail(String email);
 
     User save(User newUser);
+
+    boolean maxNumberOfPortfoliosPrUserReached(Long userId);
+
+    boolean maxNumberOfPortfolioEntriesPrPortfolioReached(Long portfolioId, Long userId);
 
     AuthenticationResponse generatedAuthenticationResponse(User user);
 }

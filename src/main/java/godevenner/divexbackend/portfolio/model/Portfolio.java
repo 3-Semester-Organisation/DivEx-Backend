@@ -18,7 +18,7 @@ public class Portfolio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String name;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
