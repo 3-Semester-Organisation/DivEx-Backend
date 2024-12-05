@@ -16,6 +16,7 @@ public class StockMapper {
         Dividend dividend = stock.getDividend();
 
         return new StockResponse(
+                stock.getId(),
                 stock.getTicker(),
                 stock.getName(),
                 stock.getCountry(),

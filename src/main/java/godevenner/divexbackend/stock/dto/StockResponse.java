@@ -5,6 +5,7 @@ import godevenner.divexbackend.stock.model.Currency;
 import java.util.List;
 
 public record StockResponse(
+        long stockId,
         String ticker,
         String name,
         String country,
