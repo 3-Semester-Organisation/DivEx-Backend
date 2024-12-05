@@ -2,12 +2,20 @@ package godevenner.divexbackend.user.service;
 
 import godevenner.divexbackend.config.JwtService;
 import godevenner.divexbackend.login.dto.AuthenticationResponse;
+import godevenner.divexbackend.portfolio.model.Portfolio;
+import godevenner.divexbackend.portfolio.repository.PortfolioRepository;
+import godevenner.divexbackend.portfolio.service.PortfolioService;
+import godevenner.divexbackend.subscription.Subscription;
+import godevenner.divexbackend.subscription.SubscriptionType;
+import godevenner.divexbackend.subscription.repository.SubscriptionRepository;
 import godevenner.divexbackend.user.model.User;
 import godevenner.divexbackend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+
 import java.util.Map;
 import java.util.Optional;
 
@@ -16,7 +24,13 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PortfolioRepository portfolioRepository;
+    private final SubscriptionRepository subscriptionRepository;
     private final JwtService jwtService;
+
+    @Value("${max.number.of.portfolios.free}")
+    private int maxNumberOfPortfoliosFree;
+
 
 
     @Override
@@ -44,6 +58,15 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(newUser);
     }
 
+    @Override
+    public boolean maxNumberOfPortfoliosPrUserReached(Long userId) {
+
+        Subscription subscription = subscriptionRepository.findById(userId).orElseThrow();
+        if (subscription.getSubscriptionType() == SubscriptionType.PREMIUM) return false;
+
+        int numberOfPortfolios = portfolioRepository.findByUserId(userId).size();
+        return numberOfPortfolios >= maxNumberOfPortfoliosFree; // hvis numberOfPortfolios er over eller lig maxNumberOfPortfoliosFree - return true
+    }
 
 
     @Override

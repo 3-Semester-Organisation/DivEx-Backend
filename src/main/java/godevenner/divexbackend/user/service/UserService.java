@@ -18,5 +18,8 @@ public interface UserService {
 
     User save(User newUser);
 
+    boolean maxNumberOfPortfoliosPrUserReached(Long userId);
+
+
     AuthenticationResponse generatedAuthenticationResponse(User user);
 }
