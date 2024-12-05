@@ -5,6 +5,7 @@ import godevenner.divexbackend.portfolio.dto.CreatePortfolioRequest;
 import godevenner.divexbackend.portfolio.dto.UpdatePortfolioRequest;
 import godevenner.divexbackend.portfolio.model.Portfolio;
 import godevenner.divexbackend.portfolio.model.PortfolioEntry;
+import godevenner.divexbackend.portfolio.repository.PortfolioEntryRepository;
 import godevenner.divexbackend.portfolio.service.PortfolioEntryService;
 import godevenner.divexbackend.portfolio.service.PortfolioService;
 import godevenner.divexbackend.user.service.UserService;
@@ -24,6 +25,7 @@ public class PortfolioController {
     private final PortfolioEntryService portfolioEntryService;
     private final UserService userService;
     private final JwtService jwtService;
+    private final PortfolioEntryRepository portfolioEntryRepository;
 
     @GetMapping("/portfolio")
     public ResponseEntity<List<Portfolio>> getPortfolios(@RequestHeader("Authorization") String authorizationHeader) {
@@ -60,7 +62,15 @@ public class PortfolioController {
     }
 
     @PostMapping("/portfolioentry")
-    public ResponseEntity<PortfolioEntry> createPortfolioEntry(@RequestBody PortfolioEntry portfolioEntry) {
+    public ResponseEntity createPortfolioEntry(@RequestBody PortfolioEntry portfolioEntry, @RequestHeader("Authorization") String authorizationHeader) {
+        String token = authorizationHeader.replace("Bearer ", "");
+        Long userId = Long.parseLong(jwtService.extractUserId(token));
+
+        Long portfolioId = portfolioEntry.getPortfolio().getId();
+        if (userService.maxNumberOfPortfolioEntriesPrPortfolioReached(portfolioId, userId)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Cannot add entry. Free membership entry limit reached.");
+        }
+
         PortfolioEntry createdPortfolioEntry = portfolioEntryService.createPortfolioEntry(portfolioEntry);
         return ResponseEntity.ok(createdPortfolioEntry);
     }
