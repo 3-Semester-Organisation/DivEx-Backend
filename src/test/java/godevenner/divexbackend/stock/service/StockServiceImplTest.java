@@ -4,7 +4,7 @@ import godevenner.divexbackend.exception.InvalidTickerException;
 import godevenner.divexbackend.stock.dto.HistoricalDividendsResponse;
 import godevenner.divexbackend.stock.dto.HistoricalPricingResponse;
 import godevenner.divexbackend.stock.dto.StockResponse;
-import godevenner.divexbackend.stock.mapper.StockResponseMapper;
+import godevenner.divexbackend.stock.mapper.StockMapper;
 import godevenner.divexbackend.stock.model.*;
 import godevenner.divexbackend.stock.repository.StockRepository;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +31,7 @@ class StockServiceImplTest {
     private StockRepository stockRepository;
 
     @Mock
-    private StockResponseMapper stockResponseMapper;
+    private StockMapper stockMapper;
 
     @InjectMocks
     private StockServiceImpl stockService;
@@ -66,6 +65,7 @@ class StockServiceImplTest {
 
         // Apple StockResponse
         StockResponse appleStockResponse = new StockResponse(
+                1,
                 "AAPL",
                 "Apple Inc.",
                 "USA",
@@ -84,6 +84,7 @@ class StockServiceImplTest {
 
         // Google StockResponse
         StockResponse googleStockResponse = new StockResponse(
+                2,
                 "GOOGL",
                 "Alphabet Inc.",
                 "USA",
@@ -102,7 +103,7 @@ class StockServiceImplTest {
 
         List<StockResponse> stockResponseList = Arrays.asList(appleStockResponse, googleStockResponse);
 
-        Mockito.when(stockResponseMapper.toStockResponse(ArgumentMatchers.any(Stock.class))).thenReturn(appleStockResponse).thenReturn(googleStockResponse);
+        Mockito.when(stockMapper.toStockResponse(ArgumentMatchers.any(Stock.class))).thenReturn(appleStockResponse).thenReturn(googleStockResponse);
 
         Page<StockResponse> expectedResult = new PageImpl<>(stockResponseList, pageable, totalElements);
         Page<StockResponse> actualResult = stockService.getAllStocks(pageable);
@@ -124,6 +125,7 @@ class StockServiceImplTest {
 
         // Apple StockResponse
         StockResponse appleStockResponse = new StockResponse(
+                1,
                 "AAPL",
                 "Apple Inc.",
                 "USA",
@@ -139,10 +141,10 @@ class StockServiceImplTest {
                 5000000,
                 List.of(new HistoricalDividendsResponse(2.0, 5000000))
         );
-        Mockito.when(stockResponseMapper.toStockResponse(ArgumentMatchers.any(Stock.class))).thenReturn(appleStockResponse);
+        Mockito.when(stockMapper.toStockResponse(ArgumentMatchers.any(Stock.class))).thenReturn(appleStockResponse);
 
         StockResponse expectedResult = appleStockResponse;
-        StockResponse actualResult = stockService.getStock("APPL");
+        StockResponse actualResult = stockService.getStockByTicker("APPL");
 
         assertEquals(expectedResult, actualResult);
     }
@@ -151,6 +153,6 @@ class StockServiceImplTest {
     @Test
     void getStockByTickerFail() {
         Mockito.when(stockRepository.findByTicker(ArgumentMatchers.anyString())).thenThrow(new InvalidTickerException("Invalid ticker: X"));
-        assertThrows(InvalidTickerException.class, () -> stockService.getStock("X"));
+        assertThrows(InvalidTickerException.class, () -> stockService.getStockByTicker("X"));
     }
 }

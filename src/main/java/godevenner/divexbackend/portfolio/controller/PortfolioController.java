@@ -1,7 +1,11 @@
 package godevenner.divexbackend.portfolio.controller;
 
 import godevenner.divexbackend.config.JwtService;
+import godevenner.divexbackend.exception.MaximumPortfolioEntriesReachException;
 import godevenner.divexbackend.portfolio.dto.CreatePortfolioRequest;
+import godevenner.divexbackend.portfolio.dto.PortfolioEntryRequest;
+import godevenner.divexbackend.portfolio.dto.PortfolioEntryResponse;
+import godevenner.divexbackend.portfolio.dto.PortfolioResponse;
 import godevenner.divexbackend.portfolio.dto.UpdatePortfolioRequest;
 import godevenner.divexbackend.portfolio.model.Portfolio;
 import godevenner.divexbackend.portfolio.model.PortfolioEntry;
@@ -11,7 +15,9 @@ import godevenner.divexbackend.portfolio.service.PortfolioService;
 import godevenner.divexbackend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,11 +33,11 @@ public class PortfolioController {
     private final JwtService jwtService;
 
     @GetMapping("/portfolio")
-    public ResponseEntity<List<Portfolio>> getPortfolios(@RequestHeader("Authorization") String authorizationHeader) {
+    public ResponseEntity<List<PortfolioResponse>> getPortfolios(@RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.replace("Bearer ", "");
-        Long userId = Long.parseLong(jwtService.extractUserId(token));
-        List<Portfolio> portfolio = portfolioService.getPortfolios(userId);
-        return ResponseEntity.ok(portfolio);
+        String userId = jwtService.extractUserId(token);
+        List<PortfolioResponse> response = portfolioService.getPortfolios(Long.parseLong(userId));
+        return ResponseEntity.ok(response);
     }
 
     // this shit do be bussin respectfully
@@ -54,23 +60,20 @@ public class PortfolioController {
         return ResponseEntity.ok(portfolio);
     }
 
-    @GetMapping("/portfolioentries")
-    public ResponseEntity<List<PortfolioEntry>> getPortfolioEntries(@RequestBody Long userId) {
-        List<PortfolioEntry> portfolioentries = portfolioEntryService.getPortfolioEntries(userId);
-        return ResponseEntity.ok(portfolioentries);
-    }
 
+
+    @PreAuthorize("hasAuthority('PREMIUM') || hasAuthority('FREE')")
     @PostMapping("/portfolioentry")
-    public ResponseEntity createPortfolioEntry(@RequestBody PortfolioEntry portfolioEntry, @RequestHeader("Authorization") String authorizationHeader) {
+    public ResponseEntity<PortfolioEntryResponse> createPortfolioEntry(@RequestBody PortfolioEntryRequest request, @RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.replace("Bearer ", "");
         Long userId = Long.parseLong(jwtService.extractUserId(token));
 
-        Long portfolioId = portfolioEntry.getPortfolio().getId();
+        Long portfolioId = request.portfolioId();
         if (userService.maxNumberOfPortfolioEntriesPrPortfolioReached(portfolioId, userId)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Cannot add entry. Free membership entry limit reached.");
+            throw new MaximumPortfolioEntriesReachException("Cannot add entry. Free membership entry limit reached.");
         }
 
-        PortfolioEntry createdPortfolioEntry = portfolioEntryService.createPortfolioEntry(portfolioEntry);
-        return ResponseEntity.ok(createdPortfolioEntry);
+        PortfolioEntryResponse response = portfolioEntryService.createPortfolioEntry(request);
+        return ResponseEntity.ok(response);
     }
 }

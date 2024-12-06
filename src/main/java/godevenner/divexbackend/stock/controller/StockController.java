@@ -7,6 +7,7 @@ import godevenner.divexbackend.stock.service.PopularityService;
 import godevenner.divexbackend.stock.service.StockService;
 import godevenner.divexbackend.tracker.TrackerService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,9 +42,15 @@ public class StockController {
 
     @GetMapping("/stock/{ticker}")
     public ResponseEntity<StockResponse> getStock(@PathVariable String ticker, HttpServletRequest request) {
-        StockResponse stockResponse = stockService.getStock(ticker);
+        StockResponse stockResponse = stockService.getStockByTicker(ticker);
         String ipAddress = request.getRemoteAddr();
         trackerService.track(stockResponse.stockId(),ipAddress);
+        return ResponseEntity.ok(stockResponse);
+    }
+
+    @GetMapping("/stocks/{searchTerm}")
+    public ResponseEntity<List<StockResponse>> getStockBySearchTerm(@PathVariable String searchTerm) {
+        List<StockResponse> stockResponse = stockService.getStocksByNameOrTicker(searchTerm);
         return ResponseEntity.ok(stockResponse);
     }
 

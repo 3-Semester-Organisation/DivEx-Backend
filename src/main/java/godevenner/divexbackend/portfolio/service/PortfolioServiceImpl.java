@@ -1,5 +1,8 @@
 package godevenner.divexbackend.portfolio.service;
 
+import godevenner.divexbackend.portfolio.dto.PortfolioResponse;
+import godevenner.divexbackend.portfolio.mapper.PortfolioEntryMapper;
+import godevenner.divexbackend.portfolio.mapper.PortfolioMapper;
 import godevenner.divexbackend.portfolio.dto.UpdatePortfolioRequest;
 import godevenner.divexbackend.portfolio.model.Portfolio;
 import godevenner.divexbackend.portfolio.repository.PortfolioRepository;
@@ -8,6 +11,7 @@ import godevenner.divexbackend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,10 +20,16 @@ import java.util.Optional;
 public class PortfolioServiceImpl implements PortfolioService {
 
     private final PortfolioRepository portfolioRepository;
+    private final PortfolioMapper portfolioMapper;
     private final UserRepository userRepository;
 
-    public List<Portfolio> getPortfolios(Long userId) {
-        return portfolioRepository.findByUserId(userId);
+    public List<PortfolioResponse> getPortfolios(Long userId) {
+        List<Portfolio> portfolios = portfolioRepository.findByUserId(userId);
+
+        List<PortfolioResponse> response = portfolios.stream()
+                .map(portfolioMapper::toPortfolioResponse)
+                .toList();
+        return response;
     }
 
     public Portfolio createPortfolio(String portfolioName, Long userId) {
@@ -35,9 +45,7 @@ public class PortfolioServiceImpl implements PortfolioService {
     }
 
     public Portfolio updatePortfolio(UpdatePortfolioRequest request) {
-        Portfolio portfolio = portfolioRepository.findById(request.portfolioId());
-
-        System.out.println("portfolioname: " + request.portfolioName());
+        Portfolio portfolio = portfolioRepository.findById(request.portfolioId()).orElseThrow( () -> new RuntimeException("Portfolio not found"));
         portfolio.setName(request.portfolioName());
 
         return portfolioRepository.save(portfolio);

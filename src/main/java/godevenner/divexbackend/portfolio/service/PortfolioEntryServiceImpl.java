@@ -1,5 +1,8 @@
 package godevenner.divexbackend.portfolio.service;
 
+import godevenner.divexbackend.portfolio.dto.PortfolioEntryRequest;
+import godevenner.divexbackend.portfolio.dto.PortfolioEntryResponse;
+import godevenner.divexbackend.portfolio.mapper.PortfolioEntryMapper;
 import godevenner.divexbackend.portfolio.model.PortfolioEntry;
 import godevenner.divexbackend.portfolio.repository.PortfolioEntryRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,14 +15,13 @@ import java.util.List;
 public class PortfolioEntryServiceImpl implements PortfolioEntryService {
 
     private final PortfolioEntryRepository portfolioEntryRepository;
+    private final PortfolioEntryMapper portfolioEntryMapper;
 
-    public List<PortfolioEntry> getPortfolioEntries(Long userId) {
-        return portfolioEntryRepository.findByPortfolioId(userId);
+    @Override
+    public PortfolioEntryResponse createPortfolioEntry(PortfolioEntryRequest request) {
+        PortfolioEntry portfolioEntry = portfolioEntryMapper.toPortfolioEntry(request);
+        PortfolioEntry savedRequest = portfolioEntryRepository.save(portfolioEntry);
+        PortfolioEntryResponse response = portfolioEntryMapper.toPortfolioEntryResponse(savedRequest);
+        return response;
     }
-
-    public PortfolioEntry createPortfolioEntry(PortfolioEntry portfolioEntry) {
-        return portfolioEntryRepository.save(portfolioEntry);
-    }
-
-
 }

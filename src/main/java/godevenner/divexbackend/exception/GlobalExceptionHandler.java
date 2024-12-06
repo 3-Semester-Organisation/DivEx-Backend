@@ -43,4 +43,10 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
+    @ExceptionHandler(MaximumPortfolioEntriesReachException.class)
+    public ResponseEntity<ErrorDto> handleMaximumPortfolioEntriesReachException(MaximumPortfolioEntriesReachException exception) {
+        ErrorDto error = new ErrorDto((HttpStatus.BAD_REQUEST.value()), exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
 }

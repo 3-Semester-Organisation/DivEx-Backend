@@ -9,7 +9,9 @@ import java.util.List;
 
 public interface StockService {
 
-    StockResponse getStock(String ticker);
+    StockResponse getStockByTicker(String ticker);
+
+    List<StockResponse> getStocksByNameOrTicker(String searchTerm);
 
     Page<StockResponse> getAllStocks(Pageable pageable);
 

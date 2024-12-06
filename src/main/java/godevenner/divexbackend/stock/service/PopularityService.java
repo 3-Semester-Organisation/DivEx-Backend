@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PopularityService {
 
-    StockPopularity getPopularityByStockId(int stockId);
+    StockPopularity getPopularityByStockId(long stockId);
 
     List<StockPopularity> getAllStockPopularities();
     List<StockPopularity> getAllStockPopularitiesForWeek();
