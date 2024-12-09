@@ -26,8 +26,8 @@ public class PortfolioEntryServiceImpl implements PortfolioEntryService {
     }
 
     @Override
-    public void deletePortfolioEntry(long portfolioEntryId) {
-        portfolioEntryRepository.deletePortfolioEntryById(portfolioEntryId);
+    public void deletePortfolioEntryByStockName(String portfolioEntryName) {
+        portfolioEntryRepository.deletePortfolioEntryByStockName(portfolioEntryName);
     }
 
 
