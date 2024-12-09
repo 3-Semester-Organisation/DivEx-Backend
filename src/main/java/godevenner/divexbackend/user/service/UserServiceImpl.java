@@ -7,10 +7,12 @@ import godevenner.divexbackend.portfolio.repository.PortfolioRepository;
 import godevenner.divexbackend.subscription.Subscription;
 import godevenner.divexbackend.subscription.SubscriptionType;
 import godevenner.divexbackend.subscription.repository.SubscriptionRepository;
+import godevenner.divexbackend.user.dto.EditUserRequest;
 import godevenner.divexbackend.user.model.User;
 import godevenner.divexbackend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -27,6 +29,7 @@ public class UserServiceImpl implements UserService {
     private final PortfolioEntryRepository portfolioEntryRepository;
     private final SubscriptionRepository subscriptionRepository;
     private final JwtService jwtService;
+    private final PasswordEncoder passwordEncoder;
 
     @Value("${max.number.of.portfolios.free}")
     private int maxNumberOfPortfoliosFree;
@@ -87,6 +90,29 @@ public class UserServiceImpl implements UserService {
         extraClaims.put("userId", user.getId());
         String token = jwtService.generateToken(extraClaims, user);
         return new AuthenticationResponse(token);
+    }
+
+
+    @Override
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    @Override
+    public void changePassword(Long id, String password) {
+        User user = userRepository.findById(id).orElseThrow();
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
+    }
+
+    @Override
+    public void editUser(Long id, EditUserRequest editUserRequest) {
+        User user = userRepository.findById(id).orElseThrow();
+        user.setFirstName(editUserRequest.firstName());
+        user.setLastName(editUserRequest.lastName());
+        user.setEmail(editUserRequest.email());
+        user.setPhone(editUserRequest.phone());
+        userRepository.save(user);
     }
 
 
