@@ -76,4 +76,11 @@ public class PortfolioController {
         PortfolioEntryResponse response = portfolioEntryService.createPortfolioEntry(request);
         return ResponseEntity.ok(response);
     }
+
+    @PreAuthorize("hasAuthority('PREMIUM') || hasAuthority('FREE')")
+    @DeleteMapping("/portfolioentry")
+    public ResponseEntity<Void> deletePortfolioEntry(@RequestParam Long id, @RequestHeader("Authorization") String authorizationHeader) {
+        portfolioEntryService.deletePortfolioEntry(id);
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -24,4 +24,11 @@ public class PortfolioEntryServiceImpl implements PortfolioEntryService {
         PortfolioEntryResponse response = portfolioEntryMapper.toPortfolioEntryResponse(savedRequest);
         return response;
     }
+
+    @Override
+    public void deletePortfolioEntry(long portfolioEntryId) {
+        portfolioEntryRepository.deleteById(portfolioEntryId);
+    }
+
+
 }
