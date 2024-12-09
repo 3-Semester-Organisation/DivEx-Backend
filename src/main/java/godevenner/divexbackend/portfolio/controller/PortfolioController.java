@@ -77,10 +77,9 @@ public class PortfolioController {
         return ResponseEntity.ok(response);
     }
 
-    @PreAuthorize("hasAuthority('PREMIUM') || hasAuthority('FREE')")
     @DeleteMapping("/portfolioentry")
-    public ResponseEntity<Void> deletePortfolioEntry(@RequestParam String name) {
-        portfolioEntryService.deletePortfolioEntryByStockName(name);
+    public ResponseEntity<Void> deletePortfolioEntry(@RequestBody String ticker) {
+        portfolioEntryService.deletePortfolioEntry(ticker);
         return ResponseEntity.noContent().build();
     }
 }

@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface PortfolioEntryService {
     PortfolioEntryResponse createPortfolioEntry(PortfolioEntryRequest request);
-    void deletePortfolioEntryByStockName(String portfolioEntryName);
+    void deletePortfolioEntry(String portfolioEntryTicker);
 }

@@ -10,5 +10,5 @@ import java.util.List;
 public interface PortfolioEntryRepository extends JpaRepository<PortfolioEntry, Long> {
 
     List<PortfolioEntry> findByPortfolioId(Long portfolioId);
-    void deletePortfolioEntryByStockName(String portfolioEntryName);
+    void deletePortfolioEntryByStockId(Long stockId);
 }

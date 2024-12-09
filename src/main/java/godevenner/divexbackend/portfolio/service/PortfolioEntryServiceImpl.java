@@ -5,6 +5,9 @@ import godevenner.divexbackend.portfolio.dto.PortfolioEntryResponse;
 import godevenner.divexbackend.portfolio.mapper.PortfolioEntryMapper;
 import godevenner.divexbackend.portfolio.model.PortfolioEntry;
 import godevenner.divexbackend.portfolio.repository.PortfolioEntryRepository;
+import godevenner.divexbackend.stock.dto.StockResponse;
+import godevenner.divexbackend.stock.model.Stock;
+import godevenner.divexbackend.stock.service.StockService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,7 @@ public class PortfolioEntryServiceImpl implements PortfolioEntryService {
 
     private final PortfolioEntryRepository portfolioEntryRepository;
     private final PortfolioEntryMapper portfolioEntryMapper;
+    private final StockService stockService;
 
     @Override
     public PortfolioEntryResponse createPortfolioEntry(PortfolioEntryRequest request) {
@@ -26,8 +30,9 @@ public class PortfolioEntryServiceImpl implements PortfolioEntryService {
     }
 
     @Override
-    public void deletePortfolioEntryByStockName(String portfolioEntryName) {
-        portfolioEntryRepository.deletePortfolioEntryByStockName(portfolioEntryName);
+    public void deletePortfolioEntry(String portfolioEntryTicker) {
+        StockResponse stock = stockService.getStockByTicker(portfolioEntryTicker);
+        portfolioEntryRepository.deletePortfolioEntryByStockId(stock.stockId());
     }
 
 
