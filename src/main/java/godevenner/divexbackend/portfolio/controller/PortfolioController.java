@@ -2,11 +2,7 @@ package godevenner.divexbackend.portfolio.controller;
 
 import godevenner.divexbackend.config.JwtService;
 import godevenner.divexbackend.exception.MaximumPortfolioEntriesReachException;
-import godevenner.divexbackend.portfolio.dto.CreatePortfolioRequest;
-import godevenner.divexbackend.portfolio.dto.PortfolioEntryRequest;
-import godevenner.divexbackend.portfolio.dto.PortfolioEntryResponse;
-import godevenner.divexbackend.portfolio.dto.PortfolioResponse;
-import godevenner.divexbackend.portfolio.dto.UpdatePortfolioRequest;
+import godevenner.divexbackend.portfolio.dto.*;
 import godevenner.divexbackend.portfolio.model.Portfolio;
 import godevenner.divexbackend.portfolio.model.PortfolioEntry;
 import godevenner.divexbackend.portfolio.repository.PortfolioEntryRepository;
@@ -58,6 +54,12 @@ public class PortfolioController {
     public ResponseEntity<Portfolio> updatePortfolio(@RequestBody UpdatePortfolioRequest request) {
         Portfolio portfolio = portfolioService.updatePortfolio(request);
         return ResponseEntity.ok(portfolio);
+    }
+
+    @PutMapping("/portfolio/goal")
+    public ResponseEntity<Void> updatePortfolioGoal(@RequestBody UpdatePortfolioGoalRequest request) {
+        portfolioService.updatePortfolioGoal(request);
+        return ResponseEntity.ok().build();
     }
 
 
