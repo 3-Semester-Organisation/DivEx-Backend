@@ -10,7 +10,6 @@ import java.util.List;
 public interface PortfolioEntryRepository extends JpaRepository<PortfolioEntry, Long> {
 
     List<PortfolioEntry> findByPortfolioId(Long portfolioId);
-    void deletePortfolioEntryByStockId(Long stockId);
     PortfolioEntry findByStockIdAndPortfolioId(Long stockId, Long portfolioId);
     void deletePortfolioEntryById(Long id);
 }
