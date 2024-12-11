@@ -11,5 +11,4 @@ public interface PortfolioEntryRepository extends JpaRepository<PortfolioEntry, 
 
     List<PortfolioEntry> findByPortfolioId(Long portfolioId);
     PortfolioEntry findByStockIdAndPortfolioId(Long stockId, Long portfolioId);
-    void deleteById(Long entryId);
 }

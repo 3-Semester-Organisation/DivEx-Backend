@@ -38,6 +38,6 @@ public class PortfolioEntryServiceImpl implements PortfolioEntryService {
         PortfolioEntry entry = portfolioEntryRepository.findByStockIdAndPortfolioId(
                 stock.stockId(), request.portfolioId());
 
-        portfolioEntryRepository.deleteById(entry.getId());
+        portfolioEntryRepository.delete(entry);
     }
 }
