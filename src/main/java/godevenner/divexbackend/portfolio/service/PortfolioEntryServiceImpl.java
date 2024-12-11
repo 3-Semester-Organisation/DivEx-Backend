@@ -37,7 +37,7 @@ public class PortfolioEntryServiceImpl implements PortfolioEntryService {
         StockResponse stock = stockService.getStockByTicker(request.portfolioStockTicker());
         PortfolioEntry entry = portfolioEntryRepository.findByStockIdAndPortfolioId(
                 stock.stockId(), request.portfolioId());
-
-        portfolioEntryRepository.delete(entry);
+        portfolioEntryRepository.deletePortfolioEntry(entry.getId());
+        //portfolioEntryRepository.delete(entry);
     }
 }
