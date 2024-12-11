@@ -1,5 +1,6 @@
 package godevenner.divexbackend.portfolio.service;
 
+import godevenner.divexbackend.portfolio.dto.DeleteRequest;
 import godevenner.divexbackend.portfolio.dto.PortfolioEntryRequest;
 import godevenner.divexbackend.portfolio.dto.PortfolioEntryResponse;
 import godevenner.divexbackend.portfolio.mapper.PortfolioEntryMapper;
@@ -30,10 +31,11 @@ public class PortfolioEntryServiceImpl implements PortfolioEntryService {
     }
 
     @Override
-    public void deletePortfolioEntry(String portfolioEntryTicker) {
-        StockResponse stock = stockService.getStockByTicker(portfolioEntryTicker);
-        portfolioEntryRepository.deletePortfolioEntryByStockId(stock.stockId());
+    public void deletePortfolioEntry(DeleteRequest request) {
+        StockResponse stock = stockService.getStockByTicker(request.ticker());
+        PortfolioEntry entry = portfolioEntryRepository.findByStockIdAndPortfolioId(
+                stock.stockId(), request.portfolioId());
+
+        portfolioEntryRepository.deletePortfolioEntryById(entry.getId());
     }
-
-
 }

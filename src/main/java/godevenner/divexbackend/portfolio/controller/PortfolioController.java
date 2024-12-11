@@ -2,11 +2,7 @@ package godevenner.divexbackend.portfolio.controller;
 
 import godevenner.divexbackend.config.JwtService;
 import godevenner.divexbackend.exception.MaximumPortfolioEntriesReachException;
-import godevenner.divexbackend.portfolio.dto.CreatePortfolioRequest;
-import godevenner.divexbackend.portfolio.dto.PortfolioEntryRequest;
-import godevenner.divexbackend.portfolio.dto.PortfolioEntryResponse;
-import godevenner.divexbackend.portfolio.dto.PortfolioResponse;
-import godevenner.divexbackend.portfolio.dto.UpdatePortfolioRequest;
+import godevenner.divexbackend.portfolio.dto.*;
 import godevenner.divexbackend.portfolio.model.Portfolio;
 import godevenner.divexbackend.portfolio.model.PortfolioEntry;
 import godevenner.divexbackend.portfolio.repository.PortfolioEntryRepository;
@@ -78,8 +74,8 @@ public class PortfolioController {
     }
 
     @DeleteMapping("/portfolioentry")
-    public ResponseEntity<Void> deletePortfolioEntry(@RequestBody String ticker) {
-        portfolioEntryService.deletePortfolioEntry(ticker);
+    public ResponseEntity<Void> deletePortfolioEntry(@RequestBody DeleteRequest request) {
+        portfolioEntryService.deletePortfolioEntry(request);
         return ResponseEntity.noContent().build();
     }
 }
