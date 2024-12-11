@@ -15,6 +15,7 @@ public class PortfolioMapper {
         return new PortfolioResponse(
                 portfolio.getId(),
                 portfolio.getName(),
+                portfolio.getGoal(),
                 portfolio.getPortfolioEntries().stream()
                         .map(portfolioEntryMapper::toPortfolioEntryResponse)
                         .toList());
