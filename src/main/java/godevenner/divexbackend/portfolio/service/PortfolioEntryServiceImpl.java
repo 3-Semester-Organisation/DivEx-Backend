@@ -9,6 +9,7 @@ import godevenner.divexbackend.portfolio.repository.PortfolioEntryRepository;
 import godevenner.divexbackend.stock.dto.StockResponse;
 import godevenner.divexbackend.stock.model.Stock;
 import godevenner.divexbackend.stock.service.StockService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,8 +32,9 @@ public class PortfolioEntryServiceImpl implements PortfolioEntryService {
     }
 
     @Override
+    @Transactional //this is necessary else it complains
     public void deletePortfolioEntry(DeleteRequest request) {
-        StockResponse stock = stockService.getStockByTicker(request.ticker());
+        StockResponse stock = stockService.getStockByTicker(request.portfolioStockTicker());
         PortfolioEntry entry = portfolioEntryRepository.findByStockIdAndPortfolioId(
                 stock.stockId(), request.portfolioId());
 

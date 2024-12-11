@@ -1,7 +1,7 @@
 package godevenner.divexbackend.portfolio.dto;
 
 public record DeleteRequest(
-        String ticker,
+        String portfolioStockTicker,
         long portfolioId
 ) {
 }
