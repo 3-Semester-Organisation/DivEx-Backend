@@ -34,10 +34,7 @@ public class PortfolioEntryServiceImpl implements PortfolioEntryService {
     @Override
     @Transactional //this is necessary else it complains
     public void deletePortfolioEntry(DeleteRequest request) {
-        StockResponse stock = stockService.getStockByTicker(request.portfolioStockTicker());
-        PortfolioEntry entry = portfolioEntryRepository.findByStockIdAndPortfolioId(
-                stock.stockId(), request.portfolioId());
-        portfolioEntryRepository.deletePortfolioEntry(entry.getId());
-        //portfolioEntryRepository.delete(entry);
+
+        portfolioEntryRepository.deletePortfolioEntry(request.portfolioEntryId());
     }
 }

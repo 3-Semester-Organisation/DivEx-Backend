@@ -26,17 +26,17 @@ public class PortfolioEntryMapper {
         Stock stock = stockRepository.findByTicker(request.ticker()).get();
 
         return PortfolioEntry.builder()
-                .stock(stock)
                 .stockPrice(request.stockPrice())
                 .quantity(request.quantity())
                 .entryDate(System.currentTimeMillis()/1000)
                 .portfolio(portfolio)
+                .stock(stock)
                 .build();
     }
 
     public PortfolioEntryResponse toPortfolioEntryResponse(PortfolioEntry response) {
         StockResponse stockResponse = stockMapper.toStockResponse(response.getStock());
 
-        return new PortfolioEntryResponse(stockResponse, response.getStockPrice(), response.getQuantity(), response.getEntryDate());
+        return new PortfolioEntryResponse(stockResponse, response.getStockPrice(), response.getQuantity(), response.getEntryDate(), response.getId());
     }
 }

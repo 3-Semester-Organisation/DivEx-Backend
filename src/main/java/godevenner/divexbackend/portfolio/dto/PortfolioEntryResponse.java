@@ -6,6 +6,7 @@ public record PortfolioEntryResponse(
         StockResponse stock,
         double stockPrice,
         int quantity,
-        long entryDate
+        long entryDate,
+        long id
 ) {
 }
