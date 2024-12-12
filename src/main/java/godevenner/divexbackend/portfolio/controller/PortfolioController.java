@@ -59,6 +59,12 @@ public class PortfolioController {
         return ResponseEntity.ok(portfolio);
     }
 
+    @DeleteMapping("/portfolio")
+    public ResponseEntity<Void> deletePortfolio(@RequestBody DeletePortfolioRequest request) {
+        portfolioService.deletePortfolio(request);
+        return ResponseEntity.noContent().build();
+    }
+
 
 
     @PreAuthorize("hasAuthority('PREMIUM') || hasAuthority('FREE')")
