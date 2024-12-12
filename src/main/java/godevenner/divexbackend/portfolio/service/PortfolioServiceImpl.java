@@ -54,10 +54,11 @@ public class PortfolioServiceImpl implements PortfolioService {
         return portfolioRepository.save(portfolio);
     }
 
-    public void updatePortfolioGoal(UpdatePortfolioGoalRequest request) {
+    public Portfolio updatePortfolioGoal(UpdatePortfolioGoalRequest request) {
         Portfolio portfolio = portfolioRepository.findById(request.portfolioId()).orElseThrow();
         portfolio.setGoal(request.goal());
         portfolioRepository.save(portfolio);
+        return portfolio;
     }
 
 }
