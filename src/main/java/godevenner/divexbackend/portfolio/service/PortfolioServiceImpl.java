@@ -1,10 +1,12 @@
 package godevenner.divexbackend.portfolio.service;
 
 import godevenner.divexbackend.portfolio.dto.PortfolioResponse;
+import godevenner.divexbackend.portfolio.dto.UpdatePortfolioGoalRequest;
 import godevenner.divexbackend.portfolio.mapper.PortfolioEntryMapper;
 import godevenner.divexbackend.portfolio.mapper.PortfolioMapper;
 import godevenner.divexbackend.portfolio.dto.UpdatePortfolioRequest;
 import godevenner.divexbackend.portfolio.model.Portfolio;
+import godevenner.divexbackend.portfolio.model.PortfolioEntry;
 import godevenner.divexbackend.portfolio.repository.PortfolioRepository;
 import godevenner.divexbackend.user.model.User;
 import godevenner.divexbackend.user.repository.UserRepository;
@@ -40,6 +42,7 @@ public class PortfolioServiceImpl implements PortfolioService {
         }
         portfolio.setName(portfolioName);
         portfolio.setUser(user.get());
+        portfolio.setPortfolioEntries(new ArrayList<>());
 
         return portfolioRepository.save(portfolio);
     }
@@ -50,4 +53,11 @@ public class PortfolioServiceImpl implements PortfolioService {
 
         return portfolioRepository.save(portfolio);
     }
+
+    public void updatePortfolioGoal(UpdatePortfolioGoalRequest request) {
+        Portfolio portfolio = portfolioRepository.findById(request.portfolioId()).orElseThrow();
+        portfolio.setGoal(request.goal());
+        portfolioRepository.save(portfolio);
+    }
+
 }

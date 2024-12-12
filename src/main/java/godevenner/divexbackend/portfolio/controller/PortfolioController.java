@@ -56,6 +56,12 @@ public class PortfolioController {
         return ResponseEntity.ok(portfolio);
     }
 
+    @PutMapping("/portfolio/goal")
+    public ResponseEntity<Void> updatePortfolioGoal(@RequestBody UpdatePortfolioGoalRequest request) {
+        portfolioService.updatePortfolioGoal(request);
+        return ResponseEntity.ok().build();
+    }
+
 
 
     @PreAuthorize("hasAuthority('PREMIUM') || hasAuthority('FREE')")

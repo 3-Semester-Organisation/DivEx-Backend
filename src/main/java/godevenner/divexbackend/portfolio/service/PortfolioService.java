@@ -1,6 +1,7 @@
 package godevenner.divexbackend.portfolio.service;
 
 import godevenner.divexbackend.portfolio.dto.PortfolioResponse;
+import godevenner.divexbackend.portfolio.dto.UpdatePortfolioGoalRequest;
 import godevenner.divexbackend.portfolio.dto.UpdatePortfolioRequest;
 import godevenner.divexbackend.portfolio.model.Portfolio;
 
@@ -11,6 +12,7 @@ public interface PortfolioService {
     List<PortfolioResponse> getPortfolios(Long userId);
     Portfolio createPortfolio(String portfolioName, Long userId);
     Portfolio updatePortfolio(UpdatePortfolioRequest request);
+    void updatePortfolioGoal(UpdatePortfolioGoalRequest request);
 
 
 }
