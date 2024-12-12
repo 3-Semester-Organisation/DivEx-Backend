@@ -4,13 +4,10 @@ import godevenner.divexbackend.config.JwtService;
 import godevenner.divexbackend.exception.MaximumPortfolioEntriesReachException;
 import godevenner.divexbackend.portfolio.dto.*;
 import godevenner.divexbackend.portfolio.model.Portfolio;
-import godevenner.divexbackend.portfolio.model.PortfolioEntry;
-import godevenner.divexbackend.portfolio.repository.PortfolioEntryRepository;
 import godevenner.divexbackend.portfolio.service.PortfolioEntryService;
 import godevenner.divexbackend.portfolio.service.PortfolioService;
 import godevenner.divexbackend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -80,7 +77,7 @@ public class PortfolioController {
     }
 
     @DeleteMapping("/portfolioentry")
-    public ResponseEntity<Void> deletePortfolioEntry(@RequestBody DeleteRequest request) {
+    public ResponseEntity<Void> deletePortfolioEntry(@RequestBody DeletePortfolioEntryRequest request) {
         portfolioEntryService.deletePortfolioEntry(request);
         return ResponseEntity.noContent().build();
     }
