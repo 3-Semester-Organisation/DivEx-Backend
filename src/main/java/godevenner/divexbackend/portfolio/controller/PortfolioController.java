@@ -54,8 +54,8 @@ public class PortfolioController {
     }
 
     @PutMapping("/portfolio/goal")
-    public ResponseEntity<Portfolio> updatePortfolioGoal(@RequestBody UpdatePortfolioGoalRequest request) {
-        Portfolio portfolio = portfolioService.updatePortfolioGoal(request);
+    public ResponseEntity<PortfolioResponse> updatePortfolioGoal(@RequestBody UpdatePortfolioGoalRequest request) {
+        PortfolioResponse portfolio = portfolioService.updatePortfolioGoal(request);
         return ResponseEntity.ok(portfolio);
     }
 

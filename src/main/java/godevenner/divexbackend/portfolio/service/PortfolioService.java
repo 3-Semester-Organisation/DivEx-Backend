@@ -13,7 +13,7 @@ public interface PortfolioService {
     List<PortfolioResponse> getPortfolios(Long userId);
     Portfolio createPortfolio(String portfolioName, Long userId);
     Portfolio updatePortfolio(UpdatePortfolioRequest request);
-    Portfolio updatePortfolioGoal(UpdatePortfolioGoalRequest request);
+    PortfolioResponse updatePortfolioGoal(UpdatePortfolioGoalRequest request);
 
     void deletePortfolio(DeletePortfolioRequest request);
 
