@@ -40,7 +40,7 @@ jobs:
         context: .
         push: true
         tags: |
-          ${{ secrets.DOCKER_USERNAME }}/my-app:latest
-          ${{ secrets.DOCKER_USERNAME }}/my-app:${{ env.tag }}
+          ${{ secrets.DOCKER_USERNAME }}/divexbackend:latest
+          ${{ secrets.DOCKER_USERNAME }}/divexbackend:${{ env.tag }}
       env:
         tag: ${{ env.tag }}
