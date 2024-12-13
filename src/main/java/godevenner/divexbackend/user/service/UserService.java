@@ -29,4 +29,6 @@ public interface UserService {
     void changePassword(Long id, String password);
 
     void editUser(Long id, EditUserRequest editUserRequest);
+
+    void deleteUserByUsername(String username);
 }
