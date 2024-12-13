@@ -1,6 +1,7 @@
 package godevenner.divexbackend.user.service;
 
 import godevenner.divexbackend.config.JwtService;
+import godevenner.divexbackend.exception.UserDoesNotExistException;
 import godevenner.divexbackend.login.dto.AuthenticationResponse;
 import godevenner.divexbackend.portfolio.repository.PortfolioEntryRepository;
 import godevenner.divexbackend.portfolio.repository.PortfolioRepository;
@@ -10,6 +11,7 @@ import godevenner.divexbackend.subscription.repository.SubscriptionRepository;
 import godevenner.divexbackend.user.dto.EditUserRequest;
 import godevenner.divexbackend.user.model.User;
 import godevenner.divexbackend.user.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -115,5 +117,17 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+
+
+    @Override
+    @Transactional
+    public void deleteUserByUsername(String username) {
+        try {
+            userRepository.deleteUserByUsername(username);
+
+        } catch (Exception e) {
+            throw new UserDoesNotExistException("User does not exist");
+        }
+    }
 
 }

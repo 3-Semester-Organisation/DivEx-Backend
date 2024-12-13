@@ -7,6 +7,8 @@ import godevenner.divexbackend.user.model.User;
 import godevenner.divexbackend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -55,8 +57,12 @@ public class UserController {
 
 
 
-
-
+    @PreAuthorize("hasAuthority('PREMIUM') || hasAuthority('FREE')")
+    @DeleteMapping("/user")
+    public ResponseEntity<Void> deletePortfolioEntry(@AuthenticationPrincipal User user) {
+        String username = user.getUsername();
+        System.out.println(username);
+        userService.deleteUserByUsername(username);
+        return ResponseEntity.noContent().build();
+    }
 }
-
-
