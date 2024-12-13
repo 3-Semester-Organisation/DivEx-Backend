@@ -1,12 +1,14 @@
 # Stage 1: Build the application
 FROM amazoncorretto:21 AS build
 
+#when building the .jar file using the mvnw it needs tar which is a util
+RUN yum install -y tar gzip
+
 # Set working directory
 WORKDIR /app
 
-# Copy Maven files and source code
-COPY pom.xml .
-COPY src ./src
+# Copying Maven files and source code into working directiory
+COPY . .
 
 # Build the application and create the .jar file
 RUN ./mvnw clean package -DskipTests
