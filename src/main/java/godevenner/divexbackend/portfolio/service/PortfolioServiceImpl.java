@@ -1,5 +1,6 @@
 package godevenner.divexbackend.portfolio.service;
 
+import godevenner.divexbackend.portfolio.dto.DeletePortfolioRequest;
 import godevenner.divexbackend.portfolio.dto.PortfolioResponse;
 import godevenner.divexbackend.portfolio.dto.UpdatePortfolioGoalRequest;
 import godevenner.divexbackend.portfolio.mapper.PortfolioEntryMapper;
@@ -61,4 +62,7 @@ public class PortfolioServiceImpl implements PortfolioService {
         return portfolio;
     }
 
+    public void deletePortfolio(DeletePortfolioRequest request) {
+        portfolioRepository.deleteById(request.portfolioId());
+    }
 }
