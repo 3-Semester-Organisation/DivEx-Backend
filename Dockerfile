@@ -1,0 +1,31 @@
+# Stage 1: Build the application
+FROM amazoncorretto:21 AS build
+
+# Set working directory
+WORKDIR /app
+
+# Copy Maven files and source code
+COPY pom.xml .
+COPY src ./src
+
+# Build the application and create the .jar file
+RUN ./mvnw clean package -DskipTests
+
+# Stage 2: Create the runtime image
+FROM amazoncorretto:21
+
+# Set working directory for runtime
+WORKDIR /app
+
+# Copy the built .jar file from the build stage
+COPY --from=build /app/target/*.jar app.jar
+
+# Expose the application port
+EXPOSE 8080
+
+# Define the entry point
+ENTRYPOINT ["java"]
+
+CMD ["-jar", "app.jar"]
+
+#ty gpt
