@@ -3,8 +3,6 @@ name: Docker Build, Tag and Push
 on:
   pull_request:
     branches: [ main ]
-    types:
-      - closed
 
 jobs:
   docker:
