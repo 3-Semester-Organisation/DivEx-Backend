@@ -1,10 +1,10 @@
 name: Docker Build, Tag and Push
 
 on:
-  pull_request:
+  push:
     branches: [ main ]
-    types:
-      - closed
+    tags:
+      - "*"
 
 jobs:
   docker:
