@@ -10,6 +10,7 @@ WORKDIR /app
 # Copying Maven files and source code into working directiory
 COPY . .
 
+RUN chmod +x ./mvnw
 # Build the application and create the .jar file
 RUN ./mvnw clean package -DskipTests
 
