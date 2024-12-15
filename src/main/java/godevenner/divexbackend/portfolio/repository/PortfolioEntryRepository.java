@@ -20,8 +20,8 @@ public interface PortfolioEntryRepository extends JpaRepository<PortfolioEntry, 
     void deletePortfolioEntry(long entryId);
 
     @Modifying
-    @Query(value = "DELETE FROM Portfolio_Entry WHERE stock_id = :stockId" +
-            " AND portfolio_id = :portfolioId", nativeQuery = true) //native might not be necessary
+    @Query(value = "DELETE FROM portfolio_entry WHERE stock_id = :stockId" +
+            " AND portfolio_id = :portfolioId", nativeQuery = true) //native might not be necessary.
     void deleteByStockIdAndPortfolioId(
             @Param("stockId")long stockId,
             @Param("portfolioId") long portfolioId
