@@ -1,5 +1,6 @@
 package godevenner.divexbackend.user.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import godevenner.divexbackend.portfolio.model.Portfolio;
 import godevenner.divexbackend.subscription.Subscription;
 import jakarta.persistence.*;
@@ -38,6 +39,7 @@ public class User implements UserDetails {
 
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<Portfolio> porfolios;
 
     @OneToOne(cascade = CascadeType.ALL)
