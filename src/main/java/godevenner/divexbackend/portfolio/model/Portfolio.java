@@ -26,6 +26,6 @@ public class Portfolio {
     @JoinColumn(name = "portfolio_id")
     private List<PortfolioEntry> portfolioEntries;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 }
