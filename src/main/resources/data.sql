@@ -59,7 +59,6 @@ VALUES  (6.5, 0.47689998, 0.056399997, 4.67, 1710979200, 1),
         (15, 0.5474, 0.074200004, 5.27, 1721606400, 58),
         (0, 0, 0, 0, 956707200, 59),
         (7, 0.1359, 0.0046, 0.42, 1710460800, 60),
-        (0, 0, 0, 0, 0, 61),
         (0, 0, 0, 0.48, 1646870400, 62),
         (2.3, 0.2054, 0.0178, 3.4, 1712880000, 63),
         (0, 0, 0, 0, 1701648000, 64),
@@ -71,8 +70,7 @@ VALUES  (6.5, 0.47689998, 0.056399997, 4.67, 1710979200, 1),
         (0, 0, 0, 1.99, 1727740800, 70),
         (40.48, 0.7452, 0.278, 0, 1732060800, 71),
         (0, 0, 0, 0.99, 1649203200, 72),
-        (0, 0, 0, 1.81, 1678233600, 73),
-        (0, 0, 0, 0, 0, 74);
+        (0, 0, 0, 1.81, 1678233600, 73);
 
 INSERT INTO stock (dividend_id, id, country, exchange, industry, name, sector, ticker, currency)
 VALUES  (1, 1, 'Sweden', 'STO', 'Banks - Diversified', 'Svenska Handelsbanken ser. A', 'Financial Services', 'SHB-A.ST', 'SEK'),
@@ -135,7 +133,6 @@ VALUES  (1, 1, 'Sweden', 'STO', 'Banks - Diversified', 'Svenska Handelsbanken se
         (58, 58, 'Denmark', 'CPH', 'Banks - Regional', 'Danske Bank A/S', 'Financial Services', 'DANSKE.CO', 'DKK'),
         (59, 59, 'Denmark', 'CPH', 'Medical Devices', 'Demant A/S', 'Healthcare', 'DEMANT.CO', 'DKK'),
         (60, 60, 'Denmark', 'CPH', 'Integrated Freight & Logistics', 'DSV A/S', 'Industrials', 'DSV.CO', 'DKK'),
-        (61, 61, 'Denmark', 'CPH', 'Biotechnology', 'Genmab A/S', 'Healthcare', 'GMAB.CO', 'DKK'),
         (62, 62, 'Denmark', 'CPH', 'Medical Devices', 'GN Store Nord A/S', 'Healthcare', 'GN.CO', 'DKK'),
         (63, 63, 'Denmark', 'CPH', 'Specialty Business Services', 'ISS A/S', 'Industrials', 'ISS.CO', 'DKK'),
         (64, 64, 'Denmark', 'CPH', 'Banks - Regional', 'Jyske Bank A/S', 'Financial Services', 'JYSK.CO', 'DKK'),
@@ -147,8 +144,7 @@ VALUES  (1, 1, 'Sweden', 'STO', 'Banks - Diversified', 'Svenska Handelsbanken se
         (70, 70, 'Denmark', 'CPH', 'Beverages - Brewers', 'Royal UNIBREW A/S', 'Consumer Defensive', 'RBREW.CO', 'DKK'),
         (71, 71, 'United Kingdom', 'CPH', 'Oil & Gas Midstream', 'TORM plc A', 'Energy', 'TRMD-A.CO', 'DKK'),
         (72, 72, 'Denmark', 'CPH', 'Specialty Industrial Machinery', 'Vestas Wind Systems A/S', 'Industrials', 'VWS.CO', 'DKK'),
-        (73, 73, 'Denmark', 'CPH', 'Utilities - Renewable', 'ORSTED A/S', 'Utilities', 'ORSTED.CO', 'DKK'),
-        (74, 74, 'Denmark', 'CPH', 'Biotechnology', 'Zealand Pharma A/S', 'Healthcare', 'ZEAL.CO', 'DKK');
+        (73, 73, 'Denmark', 'CPH', 'Utilities - Renewable', 'ORSTED A/S', 'Utilities', 'ORSTED.CO', 'DKK');
 
 INSERT INTO historical_dividend (dividend, ex_dividend_date, id, stock_id)
 VALUES  (1, 955929600, 1, 1),
@@ -1774,7 +1770,6 @@ VALUES  (115.5, 115.2, 1733149997, 1, 1733236397, 1),
         (202.6, 202.2, 1733151137, 58, 1733237537, 58),
         (270, 268.8, 1733151155, 59, 1733237555, 59),
         (1543, 1536.5, 1733151172, 60, 1733237572, 60),
-        (1560, 1551.5, 1733151190, 61, 1733237590, 61),
         (137.1, 136.95, 1733151207, 62, 1733237607, 62),
         (129.5, 129, 1733151225, 63, 1733237625, 63),
         (499, 496.4, 1733151242, 64, 1733237642, 64),
@@ -1797,5 +1792,4 @@ VALUES  (115.5, 115.2, 1733149997, 1, 1733236397, 1),
         (537, 536.5, 1733151349, 81, 1733237749, 70),
         (145.4, 145.6, 1733151367, 82, 1733237767, 71),
         (111.55, 110.4, 1733151384, 83, 1733237784, 72),
-        (380.1, 381.4, 1733151402, 84, 1733237802, 73),
-        (732.5, 727, 1733151419, 85, 1733237819, 74);
+        (380.1, 381.4, 1733151402, 84, 1733237802, 73);
